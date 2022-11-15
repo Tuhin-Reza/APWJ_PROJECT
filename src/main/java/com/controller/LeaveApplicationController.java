@@ -23,6 +23,11 @@ public class LeaveApplicationController  {
     public String leaveApplication() {
         return "Department/test";
     }
+
+    @RequestMapping("/leaveApplicationEdit")
+    public String leaveApplicationEdit() {
+        return "Department/test";
+    }
     @RequestMapping("/leaveApplicationDelete")
     public String leaveApplicationDelete() {
         return "Department/test";
