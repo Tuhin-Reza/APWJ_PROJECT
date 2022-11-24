@@ -3,7 +3,6 @@
 </head><html>
 <body>
 <br>
-<a href="Departments/list"><h4>Department</h4></a>
-<a href="LeaveApplications/employeeCreate"><h4>Leave Application</h4></a>
+<a href="students/create"><h4>Student</h4></a>
 </body>
 </html>
