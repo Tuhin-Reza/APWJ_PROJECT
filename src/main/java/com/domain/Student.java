@@ -12,7 +12,7 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long student_id;
 
-    @NotNull
+    @NotNull(message = "Required")
     @Column(name = "student_name")
     private String student_name;
 

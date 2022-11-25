@@ -20,21 +20,21 @@ public class StudentRepository {
     }
 
     public List<Student> list()  {
-        Session session = sessionFactory.getCurrentSession();
-        Query<Student> studentQuery = session.createQuery("from student",Student.class);
+        Session session = sessionFactory.getCurrentSession();//get the current hibernate session
+        Query<Student> studentQuery = session.createQuery("from student",Student.class);//create query
+        List<Student> student=studentQuery.getResultList();
         return studentQuery.getResultList();
     }
-
     public boolean create(Student student)  {
         Session session = sessionFactory.getCurrentSession();
         session.save(student);
         return true;
     }
-
     public Student get(Long student_id)  {
         Session session = sessionFactory.getCurrentSession();
         return session.get(Student.class, student_id);
     }
+
 
 }
 

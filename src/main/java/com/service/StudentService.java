@@ -19,18 +19,14 @@ public class StudentService {
     }
 
     @Transactional
-    public boolean insert(Student student)  {
+    public boolean insert(Student student) {
         student.setStudent_name(student.getStudent_name());
         return studentRepository.create(student);
     }
+
     @Transactional(readOnly = true)
-    public Student get(Long student_id)  {
+    public Student get(Long student_id) {
         return studentRepository.get(student_id);
     }
-    @Transactional
-    public List<Student> getAllStudent() {
-        return studentRepository.getAllStudent();
-    }
-//    .....
 
 }
