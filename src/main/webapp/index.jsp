@@ -3,6 +3,12 @@
 </head><html>
 <body>
 <br>
-<a href="students/create"><h4>Student</h4></a>
+<p><a href="students/create">Create Student</a></p>
+<p><a href="students/">Get 1 Student</a></p>
+<p><a href="students/">Get All Student</a></p>
+<p><a href="students/">Update Student</a></p>
+<p><a href="students/">Delete Student</a></p>
+
+
 </body>
 </html>
