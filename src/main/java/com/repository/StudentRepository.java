@@ -31,10 +31,11 @@ public class StudentRepository {
         return true;
     }
 
-    public Student get(Long id)  {
+    public Student get(Long student_id)  {
         Session session = sessionFactory.getCurrentSession();
-        return session.get(Student.class, id);
+        return session.get(Student.class, student_id);
     }
+
 }
 
 

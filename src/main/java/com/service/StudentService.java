@@ -2,6 +2,7 @@ package com.service;
 
 import com.domain.Student;
 import com.repository.StudentRepository;
+import org.hibernate.mapping.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,10 +23,14 @@ public class StudentService {
         student.setStudent_name(student.getStudent_name());
         return studentRepository.create(student);
     }
-//    @Transactional(readOnly = true)
-//    public Student get(Long id)  {
-//        return studentRepository.get(id);
-//    }
-
+    @Transactional(readOnly = true)
+    public Student get(Long student_id)  {
+        return studentRepository.get(student_id);
+    }
+    @Transactional
+    public List<Student> getAllStudent() {
+        return studentRepository.getAllStudent();
+    }
+//    .....
 
 }

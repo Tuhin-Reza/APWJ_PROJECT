@@ -37,15 +37,15 @@ public class StudentController {
     }
 
     @RequestMapping("/submit")
-    public String submit(@Valid @ModelAttribute("student") Student student,
-                         BindingResult bindingResult)  {
-        if (bindingResult.hasErrors()) {
-            return "Student/StudentRegistration";
-        }
-        else {
+    public String submit(@Valid @ModelAttribute("student") Student student,BindingResult bindingResult)  {
+        if (!bindingResult.hasErrors()) {
             studentService.insert(student);
-            return "Student/StudentRegistration";
         }
+        return "Student/StudentRegistration";
     }
-
+    @RequestMapping("/getOne")
+    public void get() {
+        Student student = studentService.get(1L);
+        System.out.println(student.getStudent_id() + " " + student.getStudent_name());
+    }
 }
