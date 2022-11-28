@@ -12,7 +12,8 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long student_id;
 
-    @NotNull(message = "Required")
+    //@NotNull(message = "Required")
+    @NotNull
     @Column(name = "student_name")
     private String student_name;
 
@@ -31,6 +32,8 @@ public class Student {
     public void setStudent_name(String student_name) {
         this.student_name = student_name;
     }
+
+
 
 //    @OneToOne
 //    private StudentGuardian studentGuardian;

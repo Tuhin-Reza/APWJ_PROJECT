@@ -2,11 +2,11 @@ package com.service;
 
 import com.domain.Student;
 import com.repository.StudentRepository;
-import org.hibernate.mapping.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.SQLException;
+import java.util.List;
 
 @Service
 @Transactional
@@ -28,5 +28,22 @@ public class StudentService {
     public Student get(Long student_id) {
         return studentRepository.get(student_id);
     }
+
+    @Transactional(readOnly = true)
+    public List<Student> getAll() {
+        return studentRepository.getAll();
+    }
+
+    @Transactional
+    public Student update(Student student) {
+        return studentRepository.update(student);
+    }
+
+    @Transactional
+    public void delete(Long id) {
+        studentRepository.delete(id);
+    }
+
+
 
 }

@@ -34,7 +34,25 @@ public class StudentRepository {
         Session session = sessionFactory.getCurrentSession();
         return session.get(Student.class, student_id);
     }
+    public List<Student> getAll() {
+        Session session = sessionFactory.getCurrentSession();
+        Query<Student> studentQuery = session.createQuery("from Student", Student.class);
+        return studentQuery.getResultList();
+    }
 
+    public Student update(Student student) {
+        Session session = sessionFactory.getCurrentSession();
+        session.saveOrUpdate(student);
+        return student;
+    }
+
+    public void delete(Long id) {
+        Session session = sessionFactory.getCurrentSession();
+        Student student = get(id);
+        if (student!= null) {
+            session.delete(student);
+        }
+    }
 
 }
 

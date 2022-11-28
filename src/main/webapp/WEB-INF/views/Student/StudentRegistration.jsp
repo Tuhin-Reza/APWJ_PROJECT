@@ -21,8 +21,6 @@
   <form:errors path="student_name"/>
   <br><br>
   <input type="submit">
-
 </form:form>
-
 </body>
 </html>
