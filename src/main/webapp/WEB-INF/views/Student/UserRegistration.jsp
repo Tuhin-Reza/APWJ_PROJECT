@@ -20,6 +20,10 @@
   <form:input path="student_name" id="student_name"/>
   <form:errors path="student_name"/>
   <br><br>
+  <label for="student_pass">Password:</label>
+  <form:input path="student_pass" id="student_pass"/>
+  <form:errors path="student_pass"/>
+  <br><br>
   <input type="submit">
 </form:form>
 </body>
