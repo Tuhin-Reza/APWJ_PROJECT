@@ -14,6 +14,8 @@
     <title>Student View</title>
 </head>
 <body>
+<
+<input type="button" value="Add Student" onclick="window.location.href=' StudentRegistration.jsp';return false;"><br><br>
 <table>
   <thead>
   <tr>

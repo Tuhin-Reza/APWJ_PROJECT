@@ -18,10 +18,6 @@
 <br>
 <p><a href="students/create">Create Student</a></p>
 <p><a href="students/getOne">Get 1 Student</a></p>
-<p><a href="students/get_All">Get All Student</a></p>
-<p><a href="students/list">Update Student</a></p>
-<p><a href="students/">Delete Student</a></p>
-
-
+<p><a href="students/list">Get All Student</a></p>
 </body>
 </html>

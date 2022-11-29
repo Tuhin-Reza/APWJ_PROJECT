@@ -44,8 +44,10 @@ public class StudentController {
     public String submit(@Valid @ModelAttribute("student") Student student,BindingResult bindingResult)  {
         if (!bindingResult.hasErrors()) {
             studentService.insert(student);
+            return "redirect:/students/list";
         }
-        return "redirect:/students/list";
+        return "Student/StudentRegistration";
+
     }
     @RequestMapping("/getOne")
     public void get() {
