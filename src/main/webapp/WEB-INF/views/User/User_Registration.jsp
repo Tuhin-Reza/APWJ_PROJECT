@@ -15,16 +15,16 @@
     <title>Registration</title>
 </head>
 <body>
-<form:form action="submit" modelAttribute="student">
-  <label for="student_name">Name:</label>
-  <form:input path="student_name" id="student_name"/>
-  <form:errors path="student_name"/>
+<form:form action="submit" modelAttribute="user">
+  <label for="name">Name:</label>
+  <form:input path="name" id="name"/>
+  <form:errors path="name"/>
   <br><br>
-  <label for="student_pass">Password:</label>
-  <form:input path="student_pass" id="student_pass"/>
-  <form:errors path="student_pass"/>
+  <label for="password">Password:</label>
+  <form:input path="password" id="password"/>
+  <form:errors path="password"/>
   <br><br>
-  <input type="submit">
+  <input type="submit" value="Login">
 </form:form>
 </body>
 </html>

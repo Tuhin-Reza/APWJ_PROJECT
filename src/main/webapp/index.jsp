@@ -16,8 +16,9 @@
 </head><html>
 <body>
 <br>
-<p><a href="students/create">Create Student</a></p>
-<p><a href="students/getOne">Get 1 Student</a></p>
-<p><a href="students/list">Get All Student</a></p>
+<p><a href="users/create">Create Student</a></p>
+<p><a href="">Get 1 Student</a></p>
+<p><a href="">Get All Student</a></p>
+<p><a href="">Get All Student</a></p>
 </body>
 </html>

@@ -2,7 +2,9 @@ package com.controller;
 
 
 import com.domain.User;
+import com.repository.UserImplRepository;
 import com.repository.UserRepository;
+import com.service.UserImplService;
 import com.service.UserService;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
@@ -12,19 +14,15 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.sql.SQLException;
-import java.util.List;
 
 @Controller
-@RequestMapping("/students")
+@RequestMapping("/users")
 public class UserController {
-
     private UserService userService;
     private UserRepository userRepository;
-    public UserController(UserRepository userRepository, UserService userService) {
-
-       this.userRepository = userRepository;
+    public UserController(UserService userService, UserRepository userRepository) {
         this.userService = userService;
+        this.userRepository=userRepository;
     }
 
     @InitBinder
@@ -34,18 +32,18 @@ public class UserController {
     }
     @RequestMapping("/create")
     public String show(Model model) {
-        User student = new User();
-        model.addAttribute("student", student);
-        return "UserRegistration";
+        User user = new User();
+        model.addAttribute("user",user);
+        return "User/User_Registration";
     }
 
     @RequestMapping("/submit")
-    public String submit(@Valid @ModelAttribute("student") User student, BindingResult bindingResult)  {
+    public String submit(@Valid @ModelAttribute("user") User user, BindingResult bindingResult)  {
         if (!bindingResult.hasErrors()) {
-            userService.insert(student);
-            return "redirect:/students/list";
+            //userService.create(user);
+            return "redirect:User/User_Registration";
         }
-        return "UserRegistration";
+        return "User/User_Registration";
 
     }
 //    @RequestMapping("/getOne")

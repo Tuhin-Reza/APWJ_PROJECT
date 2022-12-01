@@ -1,50 +1,53 @@
 package com.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "user_logIn")
+@Table(name = "user2")
 public class User {
 
     @Id
-    @Column(name = "user_id")
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long user_id;
+    private Long id;
 
     //@NotNull(message = "Required")
-    @NotNull
-    @Column(name = "Name")
-    private String Name;
+    @NotEmpty(message = "Please enter your name.")
+    @Column(name = "name")
+    private String name;
 
-    @NotNull
-    @Column(name = "Password")
-    private String Password;
+    @NotEmpty(message = "Please enter your password.")
+    @Size(min = 4, max = 15,message = "Your password must between 6 and 15 characters.")
+    @Column(name = "password")
+    private String password;
 
-    public Long getUser_id() {
-        return user_id;
+    public Long getId() {
+        return id;
     }
 
-    public void setUser_id(Long user_id) {
-        this.user_id = user_id;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setName(String name) {
-        Name = name;
+        this.name = name;
     }
 
     public String getPassword() {
-        return Password;
+        return password;
     }
 
     public void setPassword(String password) {
-        Password = password;
+        this.password = password;
     }
-//    @OneToOne
+    //    @OneToOne
 //    private StudentGuardian studentGuardian;
 //    public StudentGuardian getStudentGuardian() {
 //        return studentGuardian;
