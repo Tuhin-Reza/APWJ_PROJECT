@@ -10,43 +10,45 @@ import javax.validation.constraints.Size;
 public class User {
 
     @Id
-    @Column(name = "id")
+    @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long user_id;
 
     //@NotNull(message = "Required")
     @NotEmpty(message = "Please enter your name.")
-    @Column(name = "name")
-    private String name;
+    @Size(max = 20, min = 3,message = "Name must be min 3 or max 20 Character")
+    @Column(name = "user_name",unique = true)
+    private String user_name;
 
     @NotEmpty(message = "Please enter your password.")
-    @Size(min = 4, max = 15,message = "Your password must between 6 and 15 characters.")
-    @Column(name = "password")
-    private String password;
+    @Size(min = 4, max = 15,message = "Your password must between 4 and 15 characters.")
+    @Column(name = "user_password")
+    private String user_password;
 
-    public Long getId() {
-        return id;
+    public Long getUser_id() {
+        return user_id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setUser_id(Long user_id) {
+        this.user_id = user_id;
     }
 
-    public String getName() {
-        return name;
+    public String getUser_name() {
+        return user_name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUser_name(String user_name) {
+        this.user_name = user_name;
     }
 
-    public String getPassword() {
-        return password;
+    public String getUser_password() {
+        return user_password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setUser_password(String user_password) {
+        this.user_password = user_password;
     }
+
     //    @OneToOne
 //    private StudentGuardian studentGuardian;
 //    public StudentGuardian getStudentGuardian() {

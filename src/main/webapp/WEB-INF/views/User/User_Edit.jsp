@@ -6,7 +6,6 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page isELIgnored="false" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -19,25 +18,35 @@
   <title>Edit Department</title>
 </head>
 <body>
-<form:form action="update" modelAttribute="student">
+<form:form action="update" modelAttribute="user">
   <table>
     <tr>
       <td>Student ID</td>
       <td>
-        <form:input path="student_id" id="for" readonly="true"/>
-        <form:errors path="student_id"/>
+        <form:input path="user_id" id="for" readonly="true"/>
+        <form:errors path="user_id"/>
       </td>
     </tr>
+
     <tr>
-      <td>Student NAME</td>
+      <td>User NAME</td>
       <td>
-        <form:input path="student_name" id="stident_name"/>
-        <form:errors path="student_name"/>
+        <form:input path="user_name" id="user_name"/>
+        <form:errors path="user_name"/>
       </td>
     </tr>
+
+    <tr>
+      <td>User Password</td>
+      <td>
+        <form:input path="user_password" id="user_password"/>
+        <form:errors path="user_password"/>
+      </td>
+    </tr>
+
   </table>
 
-  <br><input type="submit" value="Edit Student">
+  <br><input type="submit" value="Update">
 </form:form>
 
 </body>

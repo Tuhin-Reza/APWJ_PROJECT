@@ -29,20 +29,20 @@ public class UserImplRepository implements UserRepository{
         session.save(user);
         return user ;
     }
-    public User get(Long id)  {
+    public User get(Long user_id)  {
         Session session = sessionFactory.getCurrentSession();
-        return session.get(User.class, id);
+        return session.get(User.class, user_id);
     }
     public User update(User user) {
         Session session = sessionFactory.getCurrentSession();
         session.saveOrUpdate(user);
         return user;
     }
-    public void delete(Long id) {
+    public void delete(Long user_id) {
         Session session = sessionFactory.getCurrentSession();
-        User student = get(id);
-        if (student!= null) {
-            session.delete(student);
+        User user = get(user_id);
+        if (user!= null) {
+            session.delete(user);
         }
     }
 }

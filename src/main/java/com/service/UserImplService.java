@@ -21,8 +21,8 @@ public class UserImplService implements UserService {
         return userRepository.list();
     }
     @Transactional(readOnly = true)
-    public User get(Long id) {
-        return userRepository.get(id);
+    public User get(Long user_id) {
+        return userRepository.get(user_id);
     }
     @Transactional
     public User create(User user) {
@@ -33,7 +33,7 @@ public class UserImplService implements UserService {
         return userRepository.update(user);
     }
     @Transactional
-    public void delete(Long id) {
-        userRepository.delete(id);
+    public void delete(Long user_id) {
+        userRepository.delete(user_id);
     }
 }
