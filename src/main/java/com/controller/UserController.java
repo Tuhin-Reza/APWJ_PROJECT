@@ -5,6 +5,7 @@ import com.domain.User;
 import com.repository.UserRepository;
 import com.service.UserService;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -39,6 +40,7 @@ public class UserController {
     }
 
     @RequestMapping("/submit")
+    //@ExceptionHandler({ExceptionHandler.class})
     public String submit(@Valid @ModelAttribute("user") User user, BindingResult bindingResult)  {
         if (!bindingResult.hasErrors()) {
             userService.create(user);
@@ -73,5 +75,21 @@ public class UserController {
         userService.delete(user_id);
         return "redirect:/users/list";
     }
+
+//   @ExceptionHandler(value = Exception.class)
+//    public String exceptionHandler(Model model){
+//       model.addAttribute("msg","Something wrong ");
+//        return "User/exception";
+//    }
+//   @ExceptionHandler({SQLException.class, DataAccessException.class})
+//    public String databaseError(Model model) {
+//        // Nothing to do.  Returns the logical view name of an error page, passed
+//        // to the view-resolver(s) in usual way.
+//        // Note that the exception is NOT available to this view (it is not added
+//        // to the model) but see "Extending ExceptionHandlerExceptionResolver"
+//        // below.
+//       model.addAttribute("msg","DataBase Error ");
+//       return "User/exception";
+//    }
 
 }
