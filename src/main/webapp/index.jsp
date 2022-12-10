@@ -16,9 +16,7 @@
 </head><html>
 <body>
 <br>
-<p><a href="users/create">Create Student</a></p>
-<p><a href="">Get 1 Student</a></p>
-<p><a href="">Get All Student</a></p>
-<p><a href="">Get All Student</a></p>
+<p><a href="users/list">User List</a></p>
+<p><a href="authorities/list">Authority List</a></p>
 </body>
 </html>

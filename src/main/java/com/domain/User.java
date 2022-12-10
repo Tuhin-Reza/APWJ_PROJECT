@@ -4,6 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Entity
 @Table(name = "user2")
@@ -49,13 +50,19 @@ public class User {
         this.user_password = user_password;
     }
 
-    //    @OneToOne
-//    private StudentGuardian studentGuardian;
-//    public StudentGuardian getStudentGuardian() {
-//        return studentGuardian;
-//    }
-//
-//    public void setStudentGuardian(StudentGuardian studentGuardian) {
-//        this.studentGuardian = studentGuardian;
-//    }
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_authority_map",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "authority_id")
+    )
+    private List<Authority> authorities;
+
+    public List<Authority> getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(List<Authority> authorities) {
+        this.authorities = authorities;
+    }
 }

@@ -10,11 +10,11 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class UserImplRepository implements UserRepository{
+public class UserRepositoryImpl implements UserRepository{
 
     private SessionFactory sessionFactory;
 
-    public UserImplRepository(SessionFactory sessionFactory) {
+    public UserRepositoryImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
@@ -44,6 +44,15 @@ public class UserImplRepository implements UserRepository{
         if (user!= null) {
             session.delete(user);
         }
+    }
+
+
+    @Override
+    public User getByUsername(String user_name) {
+        Session session = sessionFactory.getCurrentSession();
+        Query<User> userQuery = session.createQuery("from user where user_name = :user_name", User.class);
+        userQuery.setParameter("user_name", user_name);
+        return userQuery.getSingleResult();
     }
 }
 

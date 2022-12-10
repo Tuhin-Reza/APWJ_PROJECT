@@ -11,20 +11,21 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-    <title>Student Edit</title>
-</head>
-<body>
-<head>
-  <title>Edit Department</title>
+  <style type="text/css">
+    .error {
+      color: red;
+    }
+  </style>
+    <title>User Edit</title>
 </head>
 <body>
 <form:form action="update" modelAttribute="user">
   <table>
     <tr>
-      <td>Student ID</td>
+      <td>User ID</td>
       <td>
         <form:input path="user_id" id="for" readonly="true"/>
-        <form:errors path="user_id"/>
+        <form:errors path="user_id" cssClass="error"/>
       </td>
     </tr>
 
@@ -32,7 +33,7 @@
       <td>User NAME</td>
       <td>
         <form:input path="user_name" id="user_name"/>
-        <form:errors path="user_name"/>
+        <form:errors path="user_name" cssClass="error"/>
       </td>
     </tr>
 
@@ -40,14 +41,12 @@
       <td>User Password</td>
       <td>
         <form:input path="user_password" id="user_password"/>
-        <form:errors path="user_password"/>
+        <form:errors path="user_password" cssClass="error"/>
       </td>
     </tr>
 
   </table>
-
   <br><input type="submit" value="Update">
 </form:form>
-
 </body>
 </html>
