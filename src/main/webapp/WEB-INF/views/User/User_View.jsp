@@ -15,7 +15,7 @@
 </head>
 <body>
 <br>
-<input type="button" value="Add Student" onclick="window.location.href='create';return false;"><br><br>
+<input type="button" value="Add User" onclick="window.location.href='create';return false;"><br><br>
 <c:if test="${!empty users}">
   <table align="left" border="1">
     <thead>

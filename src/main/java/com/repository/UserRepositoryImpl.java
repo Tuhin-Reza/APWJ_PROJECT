@@ -50,7 +50,7 @@ public class UserRepositoryImpl implements UserRepository{
     @Override
     public User getByUsername(String user_name) {
         Session session = sessionFactory.getCurrentSession();
-        Query<User> userQuery = session.createQuery("from user where user_name = :user_name", User.class);
+        Query<User> userQuery = session.createQuery("from User where user_name = :user_name", User.class);
         userQuery.setParameter("user_name", user_name);
         return userQuery.getSingleResult();
     }

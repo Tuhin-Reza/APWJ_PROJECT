@@ -17,10 +17,11 @@ import java.util.List;
 @Transactional
 public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
-    //private PasswordEncoder passwordEncoder;
-    public UserServiceImpl(UserRepositoryImpl userRepository) {
+    private PasswordEncoder passwordEncoder;
+    public UserServiceImpl(UserRepositoryImpl userRepository, PasswordEncoder passwordEncoder) {
 
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
     @Transactional(readOnly = true)
     public List<User> list() {
@@ -32,7 +33,7 @@ public class UserServiceImpl implements UserService {
     }
     @Transactional
     public User create(User user) {
-        // user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setUser_password(passwordEncoder.encode(user.getUser_password()));
         return userRepository.create(user);
     }
     @Transactional

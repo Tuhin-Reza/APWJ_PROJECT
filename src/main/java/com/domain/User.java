@@ -7,7 +7,7 @@ import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
-@Table(name = "user2")
+@Table(name = "user")
 public class User {
 
     @Id
@@ -22,7 +22,7 @@ public class User {
     private String user_name;
 
     @NotEmpty(message = "Please enter your password.")
-    @Size(min = 4, max = 15,message = "Your password must between 4 and 15 characters.")
+    //@Size(max = 1000, min = 3,message = "Name must be min 3 or max 20 Character")
     @Column(name = "user_password")
     private String user_password;
 
