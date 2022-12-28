@@ -4,9 +4,7 @@ package com.controller;
 import com.domain.Authority;
 import com.domain.User;
 import com.repository.AuthorityRepository;
-import com.repository.UserRepository;
 import com.service.AuthorityService;
-import com.service.UserService;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,19 +28,19 @@ public class AuthorityController {
     public AuthorityController(AuthorityService authorityService,AuthorityRepository authorityRepository) {
         this.authorityService=authorityService;
         this.authorityRepository=authorityRepository;
-
     }
     @InitBinder
     public void initBinder(WebDataBinder webDataBinder) {
         StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
         webDataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
     }
+
     @RequestMapping("/create")
     public String show(Model model) {
         User user = new User();
         Authority authority= new Authority();
         model.addAttribute("authority",authority);
-        return "Authority/Create_Authority";
+        return "Authority/CreateAuthority";
     }
 
     @RequestMapping("/submit")
@@ -50,22 +48,22 @@ public class AuthorityController {
     public String submit(@Valid @ModelAttribute("authority") Authority authority, BindingResult bindingResult)  {
         if (!bindingResult.hasErrors()) {
             authorityService.create(authority);
-            return "redirect:/authorities/list";
+            return "redirect:/authorities/getAll";
         }
-        return "Authority/Create_Authority";
+        return "Authority/CreateAuthority";
     }
 
-    @RequestMapping("/list")
+    @RequestMapping("/getAll")
     public String list(Model model) throws SQLException {
-        List<Authority> authorities = authorityService.list();
+        List<Authority> authorities = authorityService.getAll();
         model.addAttribute("authorities",authorities);
-        return "Authority/View_Authority";
+        return "Authority/ViewAuthority";
     }
 
     @RequestMapping("/edit")
     public String edit(@RequestParam("authority_id") Long authority_id, Model model) throws SQLException {
         model.addAttribute("authority",authorityService.get(authority_id));
-        return "Authority/Edit_Authority";
+        return "Authority/EditAuthority";
     }
 
     @RequestMapping("/update")
@@ -74,7 +72,7 @@ public class AuthorityController {
             authorityService.update(authority);
             return "redirect:/authorities/list";
         }
-        return "Authority/Edit_Authority";
+        return "Authority/EditAuthority";
     }
 
     @RequestMapping("/delete")
@@ -82,21 +80,12 @@ public class AuthorityController {
        authorityService.delete(authority_id);
         return "redirect:/authorities/list";
     }
+    @RequestMapping("/get")
+    public void get() {
+        Authority authority= authorityService.get(1L);
+        System.out.println(authority.getId());
+        System.out.println(authority.getName());
 
-//   @ExceptionHandler(value = Exception.class)
-//    public String exceptionHandler(Model model){
-//       model.addAttribute("msg","Something wrong ");
-//        return "User/exception";
-//    }
-//   @ExceptionHandler({SQLException.class, DataAccessException.class})
-//    public String databaseError(Model model) {
-//        // Nothing to do.  Returns the logical view name of an error page, passed
-//        // to the view-resolver(s) in usual way.
-//        // Note that the exception is NOT available to this view (it is not added
-//        // to the model) but see "Extending ExceptionHandlerExceptionResolver"
-//        // below.
-//       model.addAttribute("msg","DataBase Error ");
-//       return "User/exception";
-//    }
+    }
 
 }

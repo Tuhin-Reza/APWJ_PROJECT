@@ -8,35 +8,17 @@ import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
-@Table(name = "authority")
+@Table(name = "authority",schema ="project")
 public class Authority implements GrantedAuthority {
-
     @Id
-    @Column(name = "authority_id")
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long authority_id;
+    private Long id;
 
-    @NotEmpty(message = "Enter Authority name.")
-    //@Size(max = 20, min = 3,message = "Name must be min 3 or max 20 Character")
-    @Column(name = "authority_name",unique = true)
-    private String authority_name;
-
-    public Long getAuthority_id() {
-        return authority_id;
-    }
-
-    public void setAuthority_id(Long authority_id) {
-        this.authority_id = authority_id;
-    }
-
-    public String getAuthority_name() {
-        return authority_name;
-    }
-
-    public void setAuthority_name(String authority_name) {
-        this.authority_name = authority_name;
-    }
-
+    @NotEmpty(message = "*required")
+    @Size(min = 3,max = 20,message = "*length 3 to 20 Character")
+    @Column(name = "name",unique = true)
+    private String name;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_authority_map",
@@ -44,9 +26,32 @@ public class Authority implements GrantedAuthority {
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )
     private List<User> users;
-
     @Override
     public String getAuthority() {
-        return authority_name;
+        return name;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 }

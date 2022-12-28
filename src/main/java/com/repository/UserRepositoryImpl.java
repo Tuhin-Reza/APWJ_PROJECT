@@ -18,7 +18,7 @@ public class UserRepositoryImpl implements UserRepository{
         this.sessionFactory = sessionFactory;
     }
 
-    public List<User> list()  {
+    public List<User> getAll()  {
         Session session = sessionFactory.getCurrentSession();//get the current hibernate session
         Query<User> userQuery = session.createQuery("from User", User.class);//create query
         List<User> users=userQuery.getResultList();
@@ -48,10 +48,10 @@ public class UserRepositoryImpl implements UserRepository{
 
 
     @Override
-    public User getByUsername(String user_name) {
+    public User getByUsername(String username) {
         Session session = sessionFactory.getCurrentSession();
-        Query<User> userQuery = session.createQuery("from User where user_name = :user_name", User.class);
-        userQuery.setParameter("user_name", user_name);
+        Query<User> userQuery = session.createQuery("from User where username = :username", User.class);
+        userQuery.setParameter("user_name", username);
         return userQuery.getSingleResult();
     }
 }

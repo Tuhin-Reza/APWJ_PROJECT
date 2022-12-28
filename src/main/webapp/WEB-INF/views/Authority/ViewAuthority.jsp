@@ -28,12 +28,12 @@
         <c:forEach items="${authorities}" var="authority">
             <tr>
                 <c:url var="updateLink" value="/authorities/edit">
-                    <c:param name="authority_id" value="${authority.authority_id}" />
+                    <c:param name="id" value="${authority.id}" />
                 </c:url>
                 <c:url var="deleteLink" value="/authorities/delete">
-                    <c:param name="authority_id" value="${authority.authority_id}" />
+                    <c:param name="id" value="${authority.id}" />
                 </c:url>
-                <td>${authority.authority_name}</td>
+                <td>${authority.name}</td>
                 <td><a href="${updateLink}">Update</a> | <a href="${deleteLink}">Delete</a></td>
             </tr>
         </c:forEach>

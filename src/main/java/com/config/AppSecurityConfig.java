@@ -44,23 +44,56 @@ public class AppSecurityConfig {
 //                .formLogin(Customizer.withDefaults());
 //        return http.build();
 //    }
+
+//    @Bean
+//    protected void configure(HttpSecurity http) throws Exception{
+//        http.authorizeRequests()
+//                .antMatchers("/login")
+//                .permitAll()
+//                .antMatchers("/login/**").hasAnyAuthority("user")
+//                .and()
+//                .formLogin(form->form
+//                        .defaultSuccessUrl("/account/home")
+//                        .loginPage("/login/signIn")
+//                        .failureUrl("/login?error=true"));
+//    }
+
 @Bean
 public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http
             .csrf().disable()
             .cors().disable()
             .authorizeRequests()
-            .antMatchers("/authorities/**")
+            .antMatchers("/authoritiesss/**")
             .access("hasRole('ROLE_ADMIN')")
-            .antMatchers("/users/**")
+            .antMatchers("/usersss/**")
             .access("hasRole('ROLE_USER')")
             .and()
             .rememberMe()
             .and()
-            .formLogin(Customizer.withDefaults())
+            .formLogin()
+            .loginPage("/userss/creates")
+            .loginProcessingUrl("/authentic")
+            .and()
             .logout()
             .permitAll();
     return http.build();
 }
+//    @Bean
+//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+//        http
+//                // ...
+//                .formLogin()
+//                .loginPage("/login")
+//                .loginProcessingUrl("/perform_login")
+//                .defaultSuccessUrl("/homepage.html", true)
+//                .failureUrl("/login.html?error=true")
+//                .and()
+//                .logout()
+//                .logoutUrl("/perform_logout")
+//                .deleteCookies("JSESSIONID");
+//                 return http.build();
+//    }
+
 
 }

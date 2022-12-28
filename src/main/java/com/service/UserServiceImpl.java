@@ -18,46 +18,49 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
-    public UserServiceImpl(UserRepositoryImpl userRepository, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
 
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
+
     @Transactional(readOnly = true)
-    public List<User> list() {
-        return userRepository.list();
+    public List<User> getAll() {
+        return userRepository.getAll();
     }
+
     @Transactional(readOnly = true)
     public User get(Long user_id) {
         return userRepository.get(user_id);
     }
+
     @Transactional
     public User create(User user) {
-        user.setUser_password(passwordEncoder.encode(user.getUser_password()));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.create(user);
     }
+
     @Transactional
     public User update(User user) {
         return userRepository.update(user);
     }
+
     @Transactional
     public void delete(Long user_id) {
         userRepository.delete(user_id);
     }
 
-
-
     @Transactional(readOnly = true)
-    public User getByUsername(String user_name) {
-        return userRepository.getByUsername(user_name);
+    public User getByUsername(String username) {
+        return userRepository.getByUsername(username);
     }
 
     @Override
-    public UserDetails loadUserByUsername(String user_name) throws UsernameNotFoundException {
-        User user = getByUsername(user_name);
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = getByUsername(username);
         if (user == null) {
             throw new UsernameNotFoundException("User not found");
         }
-        return new org.springframework.security.core.userdetails.User(user.getUser_name(), user.getUser_password(),user.getAuthorities());
+        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),user.getAuthorities());
     }
 }

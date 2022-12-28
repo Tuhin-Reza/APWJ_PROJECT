@@ -24,15 +24,15 @@
     <tr>
       <td>Authority Name</td>
       <td>
-        <form:input path="authority_id" id="for" readonly="true"/>
-        <form:errors path="authority_id" cssClass="error"/>
+        <form:input path="id" id="for" readonly="true"/>
+        <form:errors path="id" cssClass="error"/>
       </td>
     </tr>
     <tr>
       <td>Authority Name</td>
       <td>
-        <form:input path="authority_name" id="authority_name"/><br>
-        <form:errors path="authority_name" cssClass="error"/>
+        <form:input  path="name" id="name"/><br>
+        <form:errors path="name" cssClass="error"/>
       </td>
     </tr>
   </table>

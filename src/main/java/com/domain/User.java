@@ -1,54 +1,107 @@
 package com.domain;
 
+import com.constant.PROFESSION;
+import com.validator.IsValidPassword;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
 @Table(name = "user")
 public class User {
-
     @Id
-    @Column(name = "user_id")
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long user_id;
+    private Long id;
 
-    //@NotNull(message = "Required")
-    @NotEmpty(message = "Please enter your name.")
-    @Size(max = 20, min = 3,message = "Name must be min 3 or max 20 Character")
-    @Column(name = "user_name",unique = true)
-    private String user_name;
+    @NotEmpty(message = "*name required")
+    @Column(name = "name")
+    private String name;
 
-    @NotEmpty(message = "Please enter your password.")
-    //@Size(max = 1000, min = 3,message = "Name must be min 3 or max 20 Character")
-    @Column(name = "user_password")
-    private String user_password;
+    @NotEmpty(message = "*name required")
+    @Column(name ="age")
+    private String age;
 
-    public Long getUser_id() {
-        return user_id;
+    @NotEmpty(message ="*address required")
+    @Column(name = "address")
+    private String address;
+
+    @NotNull(message = "*profession required")
+    @Column(name = "profession")
+    private PROFESSION profession;
+
+
+    @NotEmpty(message = "*username required")
+    //@Size(min = 4,max = 20)
+    @Column(name = "username",unique = true)
+    private String username;
+
+    @NotEmpty(message = "*password required")
+   // @Size(min = 4,max = 20)
+    //@IsValidPassword
+    @Column(name = "password",unique = true)
+    private String password;
+
+    public Long getId() {
+        return id;
     }
 
-    public void setUser_id(Long user_id) {
-        this.user_id = user_id;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public String getUser_name() {
-        return user_name;
+    public String getName() {
+        return name;
     }
 
-    public void setUser_name(String user_name) {
-        this.user_name = user_name;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getUser_password() {
-        return user_password;
+    public String getAge() {
+        return age;
     }
 
-    public void setUser_password(String user_password) {
-        this.user_password = user_password;
+    public void setAge(String age) {
+        this.age = age;
     }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public PROFESSION getProfession() {
+        return profession;
+    }
+
+    public void setProfession(PROFESSION profession) {
+        this.profession = profession;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
 
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -57,6 +110,7 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "authority_id")
     )
     private List<Authority> authorities;
+
 
     public List<Authority> getAuthorities() {
         return authorities;

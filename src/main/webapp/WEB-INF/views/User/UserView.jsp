@@ -21,6 +21,10 @@
     <thead>
     <tr>
       <th>Name</th>
+      <th>Age</th>
+      <th>Address</th>
+      <th>Profession</th>
+      <th>Username</th>
       <th>Password</th>
       <th>Action</th>
     </tr>
@@ -29,13 +33,17 @@
     <c:forEach items="${users}" var="user">
       <tr>
         <c:url var="updateLink" value="/users/edit">
-          <c:param name="user_id" value="${user.user_id}" />
+          <c:param name="id" value="${user.id}" />
         </c:url>
         <c:url var="deleteLink" value="/users/delete">
-          <c:param name="user_id" value="${user.user_id}" />
+          <c:param name="id" value="${user.id}" />
         </c:url>
-        <td>${user.user_name}</td>
-        <td>${user.user_password}</td>
+        <td>${user.name}</td>
+        <td>${user.age}</td>
+        <td>${user.address}</td>
+        <td>${user.profession}</td>
+        <td>${user.username}</td>
+        <td>${user.password}</td>
         <td><a href="${updateLink}">Update</a> | <a href="${deleteLink}">Delete</a></td>
       </tr>
     </c:forEach>

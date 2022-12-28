@@ -12,12 +12,11 @@ import java.util.List;
 public class AuthorityRepositoryImpl implements AuthorityRepository{
 
     private SessionFactory sessionFactory;
-
     public AuthorityRepositoryImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
-    public List<Authority> list()  {
+    public List<Authority> getAll()  {
         Session session = sessionFactory.getCurrentSession();//get the current hibernate session
         Query<Authority> authorityQuery = session.createQuery("from Authority", Authority.class);//create query
         return authorityQuery.getResultList();

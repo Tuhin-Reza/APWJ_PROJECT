@@ -20,7 +20,7 @@ import java.util.Properties;
 @Configuration
 @EnableWebMvc
 @EnableTransactionManagement
-@ComponentScan(basePackages = {"com.repository", "com.service", "com.controller", "com.domain", "com.exception"})
+@ComponentScan(basePackages = {"com.constant","com.controller","com.domain","com.service","com.repository","com.exception"})
 public class AppConfig implements WebMvcConfigurer {
 
     @Override
@@ -40,8 +40,8 @@ public class AppConfig implements WebMvcConfigurer {
     @Bean
     public DataSource dataSource() {
         MysqlDataSource mysqlDataSource = new MysqlDataSource();
-        mysqlDataSource.setDatabaseName("test");
-        mysqlDataSource.setURL("jdbc:mysql://localhost:3306/apwj");
+        mysqlDataSource.setDatabaseName("project");
+        mysqlDataSource.setURL("jdbc:mysql://localhost:3306/project");
         mysqlDataSource.setUser("root");
         mysqlDataSource.setPassword("root");
         return mysqlDataSource;

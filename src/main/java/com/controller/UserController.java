@@ -1,11 +1,11 @@
 package com.controller;
 
 
+import com.constant.PROFESSION;
 import com.domain.User;
 import com.repository.UserRepository;
 import com.service.UserService;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -31,34 +32,52 @@ public class UserController {
         StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
         webDataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
     }
+    @RequestMapping("/login")
+    public String login(Model model) {
+        User user = new User();
+        model.addAttribute("user",user);
+        return "login/LoginView";
+    }
     @RequestMapping("/create")
     public String show(Model model) {
         User user = new User();
+        List<PROFESSION> enums = Arrays.asList(PROFESSION.values());
+        model.addAttribute("enums",enums);
         model.addAttribute("user",user);
-        return "User/User_Registration";
+        return "User/UserRegistration";
         //return "redirect:/users/list";
     }
 
     @RequestMapping("/submit")
-    //@ExceptionHandler({ExceptionHandler.class})
-    public String submit(@Valid @ModelAttribute("user") User user, BindingResult bindingResult)  {
+    public String submit(@Valid @ModelAttribute("user") User user, BindingResult bindingResult,Model model)  {
         if (!bindingResult.hasErrors()) {
+            List<User> users = userService.getAll();
+            for(User user1: users) {
+                System.out.println(user1.getUsername());
+                System.out.println(user1.getPassword());
+            }
+            System.out.println(user.getProfession());
             userService.create(user);
+            System.out.println(user.getId());
             return "redirect:/users/list";
         }
-        return "User/User_Registration";
+        List<PROFESSION> enums = Arrays.asList(PROFESSION.values());
+        model.addAttribute("enums",enums);
+        return "User/UserRegistration";
     }
     @RequestMapping("/list")
     public String list(Model model) throws SQLException {
-        List<User> users = userService.list();
+        List<User> users = userService.getAll();
         model.addAttribute("users",users);
-        return "User/User_View";
+        return "User/UserView";
        // return "User/User_Registration";
     }
     @RequestMapping("/edit")
-    public String edit(@RequestParam("user_id") Long user_id, Model model) throws SQLException {
+    public String edit(@RequestParam("id") Long user_id, Model model) throws SQLException {
         model.addAttribute("user", userService.get(user_id));
-        return "User/User_Edit";
+        List<PROFESSION> enums = Arrays.asList(PROFESSION.values());
+        model.addAttribute("enums",enums);
+        return "User/UserEdit";
     }
 
     @RequestMapping("/update")
@@ -67,29 +86,19 @@ public class UserController {
             userService.update(user);
             return "redirect:/users/list";
         }
-        return "User/User_Edit";
+        return "User/UserEdit";
 
     }
     @RequestMapping("/delete")
-    public String delete(@RequestParam("user_id") Long user_id) throws SQLException {
+    public String delete(@RequestParam("id") Long user_id) throws SQLException {
         userService.delete(user_id);
         return "redirect:/users/list";
     }
-
-//   @ExceptionHandler(value = Exception.class)
-//    public String exceptionHandler(Model model){
-//       model.addAttribute("msg","Something wrong ");
-//        return "User/exception";
-//    }
-//   @ExceptionHandler({SQLException.class, DataAccessException.class})
-//    public String databaseError(Model model) {
-//        // Nothing to do.  Returns the logical view name of an error page, passed
-//        // to the view-resolver(s) in usual way.
-//        // Note that the exception is NOT available to this view (it is not added
-//        // to the model) but see "Extending ExceptionHandlerExceptionResolver"
-//        // below.
-//       model.addAttribute("msg","DataBase Error ");
-//       return "User/exception";
-//    }
-
+    @RequestMapping("/list2")
+    public String list2(Model model) throws SQLException {
+        List<User> users = userService.getAll();
+        model.addAttribute("users",users);
+        return "User/UserView";
+        // return "User/User_Registration";
+    }
 }
