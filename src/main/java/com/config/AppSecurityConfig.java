@@ -21,79 +21,27 @@ public class AppSecurityConfig {
     public PasswordEncoder encoder() {
         return new BCryptPasswordEncoder();
     }
-
-//    @Bean
-//    public InMemoryUserDetailsManager userDetailsManager() {
-//        UserDetails userDetails = User.builder()
-//                .username("Tom")
-//                .password("1234")
-//                .authorities("ROLE_USER", "ROLE_ADMIN")
-//                .build();
-//        return new InMemoryUserDetailsManager(userDetails);
-//    }
-
-//    @Bean
-//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-//        http
-//                .authorizeRequests()
-//                .antMatchers("/user/**")
-//                .access("hasRole('ROLE_ADMIN')")
-//                .antMatchers("/creat/**")
-//                .access("hasRole('ROLE_USER')")
-//                .and()
-//                .formLogin(Customizer.withDefaults());
-//        return http.build();
-//    }
-
-//    @Bean
-//    protected void configure(HttpSecurity http) throws Exception{
-//        http.authorizeRequests()
-//                .antMatchers("/login")
-//                .permitAll()
-//                .antMatchers("/login/**").hasAnyAuthority("user")
-//                .and()
-//                .formLogin(form->form
-//                        .defaultSuccessUrl("/account/home")
-//                        .loginPage("/login/signIn")
-//                        .failureUrl("/login?error=true"));
-//    }
-
 @Bean
 public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http
             .csrf().disable()
             .cors().disable()
             .authorizeRequests()
-            .antMatchers("/authoritiesss/**")
-            .access("hasRole('ROLE_ADMIN')")
-            .antMatchers("/usersss/**")
+            .antMatchers("/authoritiesssss/**")
             .access("hasRole('ROLE_USER')")
+            .antMatchers("/userss/Customer")
+            .access("hasRole('ROLE_ADMIN')")
             .and()
             .rememberMe()
             .and()
             .formLogin()
-            .loginPage("/userss/creates")
+            .loginPage("/users/login")
             .loginProcessingUrl("/authentic")
+            //.failureUrl("/users/loginError")
             .and()
             .logout()
+            .logoutUrl("/users/logout")
             .permitAll();
     return http.build();
 }
-//    @Bean
-//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-//        http
-//                // ...
-//                .formLogin()
-//                .loginPage("/login")
-//                .loginProcessingUrl("/perform_login")
-//                .defaultSuccessUrl("/homepage.html", true)
-//                .failureUrl("/login.html?error=true")
-//                .and()
-//                .logout()
-//                .logoutUrl("/perform_logout")
-//                .deleteCookies("JSESSIONID");
-//                 return http.build();
-//    }
-
-
 }

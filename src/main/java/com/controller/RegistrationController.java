@@ -53,7 +53,6 @@ public class RegistrationController {
         return "User/UserRegistration";
         //return "redirect:/users/list";
     }
-
     @RequestMapping("/submit")
     public String submit(@Valid @ModelAttribute("user") User user, BindingResult bindingResult,Model model)  {
         if (!bindingResult.hasErrors()) {
@@ -78,7 +77,7 @@ public class RegistrationController {
             uam.setUserid(user.getId());
             uam.setAuthority_id(authority.getId());
             uamService.create(uam);
-            return "redirect:/users/list";
+            return "login/LoginView";
         }
         List<PROFESSION> enums = Arrays.asList(PROFESSION.values());
         model.addAttribute("enums",enums);

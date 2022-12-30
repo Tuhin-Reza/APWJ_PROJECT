@@ -70,7 +70,6 @@
         <form:errors path="username" style="color:red" />
       </td>
     </tr>
-
     <tr>
       <td><label>Password</label></td>
       <td>

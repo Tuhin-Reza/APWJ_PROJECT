@@ -13,7 +13,7 @@ import java.util.List;
 public class AuthorityServiceImpl implements AuthorityService {
 
     private AuthorityRepository authorityRepository;
-    public AuthorityServiceImpl(AuthorityRepositoryImpl authorityRepository) {
+    public AuthorityServiceImpl(AuthorityRepository authorityRepository) {
 
         this.authorityRepository = authorityRepository;
     }

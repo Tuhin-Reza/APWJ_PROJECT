@@ -4,6 +4,7 @@ import com.mysql.cj.jdbc.MysqlDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -20,7 +21,8 @@ import java.util.Properties;
 @Configuration
 @EnableWebMvc
 @EnableTransactionManagement
-@ComponentScan(basePackages = {"com.constant","com.controller","com.domain","com.service","com.repository","com.exception"})
+@EnableAspectJAutoProxy
+@ComponentScan(basePackages = {"com.constant","com.controller","com.domain","com.service","com.repository","com.exception"})//"com.aop"
 public class AppConfig implements WebMvcConfigurer {
 
     @Override
@@ -46,7 +48,6 @@ public class AppConfig implements WebMvcConfigurer {
         mysqlDataSource.setPassword("root");
         return mysqlDataSource;
     }
-
     @Bean
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();

@@ -24,10 +24,8 @@ import java.util.List;
 public class AuthorityController {
 
     private AuthorityService authorityService;
-    private AuthorityRepository authorityRepository;
-    public AuthorityController(AuthorityService authorityService,AuthorityRepository authorityRepository) {
+    public AuthorityController(AuthorityService authorityService) {
         this.authorityService=authorityService;
-        this.authorityRepository=authorityRepository;
     }
     @InitBinder
     public void initBinder(WebDataBinder webDataBinder) {
@@ -61,7 +59,7 @@ public class AuthorityController {
     }
 
     @RequestMapping("/edit")
-    public String edit(@RequestParam("authority_id") Long authority_id, Model model) throws SQLException {
+    public String edit(@RequestParam("id") Long authority_id, Model model) throws SQLException {
         model.addAttribute("authority",authorityService.get(authority_id));
         return "Authority/EditAuthority";
     }
@@ -85,7 +83,6 @@ public class AuthorityController {
         Authority authority= authorityService.get(1L);
         System.out.println(authority.getId());
         System.out.println(authority.getName());
-
     }
 
 }
