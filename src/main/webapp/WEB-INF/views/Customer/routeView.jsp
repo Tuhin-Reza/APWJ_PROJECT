@@ -11,7 +11,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-    <title></title>
+    <title>${customer.username}</title>
     <style type="text/css">
         .error {
             color: red;
@@ -40,7 +40,7 @@
         <div class="cards">
         <c:forEach items="${routes}" var="route">
             <tr class="card">
-                <c:url var="updateLink" value="/admin/edit">
+                <c:url var="ticketLink" value="/admin/buyTicket">
                     <c:param name="id" value="${route.id}" />
                 </c:url>
                 <td>${route.busName}</td>
@@ -52,7 +52,7 @@
                 <td>${route.distance}</td>
                 <td>${route.fare}</td>
                 <td>${route.driverName}</td>
-                <td><a href="${updateLink}">Buy</a></td>
+                <td><a href="${ticketLink}">Buy Ticket</a></td>
             </tr>
         </c:forEach>
         </div>

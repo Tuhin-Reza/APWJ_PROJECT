@@ -23,10 +23,15 @@
 <c:url var="addMoneyLink" value="/customers/amountAdded">
     <c:param name="id" value="${customer.id}" />
 </c:url>
+<c:url var="routeViewLink" value="/customers/routeList">
+    <c:param name="id" value="${customer.id}" />
+</c:url>
 Balance : ${amount}<br>
 <input type="button" value="View Profile" onclick="window.location.href='${viewLink}';return false;"><br><br>
 <input type="button" value="Update Profile" onclick="window.location.href='${updateLink}';return false;"><br><br>
 <input type="button" value="Add Money" onclick="window.location.href='${addMoneyLink}';return false;"><br><br>
+<input type="button" value="Route View" onclick="window.location.href='${routeViewLink}';return false;"><br><br>
+<a href="/customers/routeList">Route View</a>
 ${customer.name}
 ${customer.profession}
 </body>

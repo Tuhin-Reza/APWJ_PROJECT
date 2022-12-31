@@ -17,7 +17,6 @@ public class RouteRepositoryImpl implements RouteRepository{
     public List<Route> getAll()  {
         Session session = sessionFactory.getCurrentSession();//get the current hibernate session
         Query<Route> routeQuery= session.createQuery("from Route", Route.class);//create query
-        List<Route> routes=routeQuery.getResultList();
         return routeQuery.getResultList();
     }
     public Route create(Route route)  {

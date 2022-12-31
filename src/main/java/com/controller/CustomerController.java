@@ -2,9 +2,11 @@ package com.controller;
 
 import com.constant.PROFESSION;
 import com.domain.Account;
+import com.domain.Route;
 import com.domain.User;
 import com.service.AccountService;
 import com.service.AuthorityService;
+import com.service.RouteService;
 import com.service.UserService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -28,10 +30,12 @@ public class CustomerController {
     private UserService userService;
     private AccountService accountService;
     private AuthorityService authorityService;
-    public CustomerController(UserService userService,AccountService accountService,AuthorityService authorityService) {
+    private RouteService routeService;
+    public CustomerController(UserService userService,AccountService accountService,AuthorityService authorityService,RouteService routeService) {
         this.userService = userService;
         this.accountService=accountService;
         this.authorityService=authorityService;
+        this.routeService=routeService;
     }
 
 
@@ -114,4 +118,32 @@ public class CustomerController {
         }
         return "Customer/CusAccUpdate";
     }
+
+
+    //-----------------------Ticket Mapping--------------------//
+    @RequestMapping("/routeList")
+    public String list(@RequestParam("id") Long user_id,Model model) throws SQLException {
+        User user=userService.get(user_id);
+        List<Route> routes =routeService.getAll();
+        model.addAttribute("routes",routes);
+        model.addAttribute("customer",user.getUsername());
+        return "Customer/routeView";
+    }
+    @RequestMapping("/buyTicket")
+    public String buy_ticket(@RequestParam("id") Long user_id,Model model) throws SQLException {
+        User user=userService.get(user_id);
+        List<Route> routes =routeService.getAll();
+        model.addAttribute("routes",routes);
+        model.addAttribute("customer",user.getUsername());
+        return "Customer/routeView";
+    }
+    @RequestMapping("/confirmTicket")
+    public String submit1(@Valid @ModelAttribute("route") Route route, BindingResult bindingResult, Model model)  {
+        if (!bindingResult.hasErrors()) {
+            routeService.create(route);
+            return "redirect:/admin/list";
+        }
+        return "Lead/route/routeCreate";
+    }
+
 }
