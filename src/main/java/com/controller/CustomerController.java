@@ -1,9 +1,13 @@
 package com.controller;
 
 import com.constant.PROFESSION;
+import com.domain.Account;
 import com.domain.User;
-import com.repository.UserRepository;
+import com.service.AccountService;
+import com.service.AuthorityService;
 import com.service.UserService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,14 +23,45 @@ import java.util.List;
 @Controller
 @RequestMapping("/customers")
 public class CustomerController {
+
+    //----------------------- All Java Services Classes --------------------//
     private UserService userService;
-    private UserRepository userRepository;
-    public CustomerController(UserService userService, UserRepository userRepository) {
+    private AccountService accountService;
+    private AuthorityService authorityService;
+    public CustomerController(UserService userService,AccountService accountService,AuthorityService authorityService) {
         this.userService = userService;
-        this.userRepository=userRepository;
+        this.accountService=accountService;
+        this.authorityService=authorityService;
     }
+
+
+
+    //----------------------- Home Page Mapping --------------------//
+    @RequestMapping("/main")
+    public String c_main(Model model) throws SQLException {
+        Authentication auth2 = SecurityContextHolder.getContext().getAuthentication();
+        List<User> users = userService.getAll();
+        for(User user1: users){
+            if(auth2.getName().equals(user1.getUsername())){
+                User customer=userService.get(user1.getId());
+                model.addAttribute("customer",customer);
+
+                List<Account> accountHome = accountService.getAll();
+                for(Account account: accountHome){
+                    if(user1.getUsername().equals(account.getUsername())){
+                       model.addAttribute("amount",account.getBalance());
+                        return "Customer/CustomerHome";
+                    }
+                }
+            }
+        }
+        return "login/LoginView";
+    }
+
+
+    //----------------------- Customer Profile Mapping --------------------//
     @RequestMapping("/customerProfile")
-    public String delete(@RequestParam("id") Long user_id,Model model) throws SQLException {
+    public String c_profile(@RequestParam("id") Long user_id,Model model) {
         User customer=userService.get(user_id);
         model.addAttribute("customer",customer);
         System.out.println(customer.getName());
@@ -34,6 +69,8 @@ public class CustomerController {
         return "Customer/CustomerProfile";
     }
 
+
+    //-----------------------Customer Profile  Update Mapping--------------------//
     @RequestMapping("/customerEdit")
     public String edit(@RequestParam("id") Long user_id, Model model) throws SQLException {
         model.addAttribute("customer", userService.get(user_id));
@@ -50,5 +87,31 @@ public class CustomerController {
         List<PROFESSION> enums = Arrays.asList(PROFESSION.values());
         model.addAttribute("enums",enums);
         return "Customer/CusProUpdate";
+    }
+
+
+    //-----------------------Added Balance Mapping--------------------//
+    @RequestMapping("/amountAdded")
+    public String amount_added(@RequestParam("id") Long user_id, Model model) throws SQLException {
+        User user=userService.get(user_id);
+        List<Account> accounts = accountService.getAll();
+        for(Account account: accounts){
+            if(user.getUsername().equals(account.getUsername())){
+                Account account2=accountService.get(account.getId());
+                    model.addAttribute("account",account2);
+                    return "Customer/CusAccUpdate";
+                }
+            }
+        return "Customer/CustomerHome";
+    }
+    @RequestMapping("/amountUpdate")
+    public String update(@Valid @ModelAttribute("account")Account account,BindingResult bindingResult) throws SQLException {
+        if (!bindingResult.hasErrors()) {
+            Account account2=accountService.get(account.getId());
+            account.setBalance(account.getBalance()+account2.getBalance());
+            accountService.update(account);
+            return "redirect:/customers/main";
+        }
+        return "Customer/CusAccUpdate";
     }
 }
