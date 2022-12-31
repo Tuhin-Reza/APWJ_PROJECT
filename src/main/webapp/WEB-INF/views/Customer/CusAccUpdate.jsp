@@ -44,6 +44,9 @@
     </tr>
   </table>
 </form:form>
-<input type="button" value="Add User" onclick="window.location.href='';return false;"><br><br>
+<c:url var="mainViewLink" value="/customers/main">
+  <c:param name="id" value="${customer.id}" />
+</c:url>
+<br><br><button onclick="window.location.href='${mainViewLink}';return false;">Back</button>
 </body>
 </html>

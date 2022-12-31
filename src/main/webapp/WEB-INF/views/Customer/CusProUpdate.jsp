@@ -73,7 +73,10 @@
     </table>
     <br><input type="submit" value="Update">
 </form:form>
-<input type="button" value="Add User" onclick="window.location.href='';return false;"><br><br>
+<c:url var="mainViewLink" value="/customers/main">
+    <c:param name="id" value="${customer.id}" />
+</c:url>
+<button onclick="window.location.href='${mainViewLink}';return false;">Back</button>
 
-        </body>
-        </html>
+</body>
+</html>

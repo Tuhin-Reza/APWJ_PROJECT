@@ -1,13 +1,8 @@
 package com.controller;
 
 import com.constant.PROFESSION;
-import com.domain.Account;
-import com.domain.Route;
-import com.domain.User;
-import com.service.AccountService;
-import com.service.AuthorityService;
-import com.service.RouteService;
-import com.service.UserService;
+import com.domain.*;
+import com.service.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -31,11 +26,22 @@ public class CustomerController {
     private AccountService accountService;
     private AuthorityService authorityService;
     private RouteService routeService;
-    public CustomerController(UserService userService,AccountService accountService,AuthorityService authorityService,RouteService routeService) {
+    private CusTicBuyService cusTicBuyService;
+    private TransitionHisService transitionHisService;
+    public CustomerController(UserService userService,AccountService accountService,AuthorityService authorityService,RouteService routeService,CusTicBuyService cusTicBuyService,TransitionHisService transitionHisService) {
         this.userService = userService;
         this.accountService=accountService;
         this.authorityService=authorityService;
         this.routeService=routeService;
+        this.cusTicBuyService=cusTicBuyService;
+        this.transitionHisService=transitionHisService;
+    }
+
+
+    //----------------------- Log Out--------------------//
+    @RequestMapping("/logout")
+    public String logout() {
+        return "login/LoginView";
     }
 
 
@@ -49,6 +55,7 @@ public class CustomerController {
             if(auth2.getName().equals(user1.getUsername())){
                 User customer=userService.get(user1.getId());
                 model.addAttribute("customer",customer);
+                model.addAttribute("customer_id",customer.getId());
 
                 List<Account> accountHome = accountService.getAll();
                 for(Account account: accountHome){
@@ -123,27 +130,78 @@ public class CustomerController {
     //-----------------------Ticket Mapping--------------------//
     @RequestMapping("/routeList")
     public String list(@RequestParam("id") Long user_id,Model model) throws SQLException {
+
         User user=userService.get(user_id);
         List<Route> routes =routeService.getAll();
+
         model.addAttribute("routes",routes);
-        model.addAttribute("customer",user.getUsername());
-        return "Customer/routeView";
+        model.addAttribute("username",user.getUsername());
+
+        System.out.println(user.getUsername());
+        return "Customer/customerDestinationView";
     }
     @RequestMapping("/buyTicket")
-    public String buy_ticket(@RequestParam("id") Long user_id,Model model) throws SQLException {
-        User user=userService.get(user_id);
-        List<Route> routes =routeService.getAll();
-        model.addAttribute("routes",routes);
-        model.addAttribute("customer",user.getUsername());
-        return "Customer/routeView";
+    public String buy_ticket(@RequestParam("id") Long route_id,Model model) throws SQLException {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        model.addAttribute("route",routeService.get(route_id));
+        model.addAttribute("username",auth.getName());
+        return "Customer/buyTicket";
     }
     @RequestMapping("/confirmTicket")
-    public String submit1(@Valid @ModelAttribute("route") Route route, BindingResult bindingResult, Model model)  {
+    public String submit1(@Valid @ModelAttribute("route") Route route, BindingResult bindingResult,Model model)  {
         if (!bindingResult.hasErrors()) {
-            routeService.create(route);
-            return "redirect:/admin/list";
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            List<Account> accounts = accountService.getAll();
+            for(Account account: accounts){
+                if(auth.getName().equals(account.getUsername())){
+                   if(account.getBalance()>200){
+                       int amount=account.getBalance()-route.getFare();
+
+                       //-----------------------Account Table--------------------//
+                       Account account1=new Account();
+                       account1.setId(account.getId());
+                       account1.setUsername(auth.getName());
+                       account1.setBalance(amount);
+                       accountService.update(account1);
+
+                       //-----------------------Ticket Information--------------------//
+                       CusTicBuy cusTicBuy=new CusTicBuy();
+                       cusTicBuy.setCus_username(auth.getName());
+                       cusTicBuy.setRouteId(route.getId());
+                       //cusTicBuyService.create(cusTicBuy);
+
+                       //-----------------------Transition History--------------------//
+                       TransitionHis transitionHis=new TransitionHis();
+                       transitionHis.setUsername(auth.getName());
+                       transitionHis.setTransition("debited");
+                       transitionHis.setAmount(route.getFare());
+                       transitionHis.setAvail_balance(amount);
+                       transitionHisService.create(transitionHis);
+                   }else {
+                       model.addAttribute("error"+"*amount less 200");
+                       return "Customer/buyTicket";
+                   }
+                }
+            }
+            return "redirect:/customers/main";
         }
-        return "Lead/route/routeCreate";
+        return "Customer/buyTicket";
     }
 
+    @RequestMapping("/TransitionList")
+    public String list(Model model) throws SQLException {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        List<TransitionHis> transitionHiss=transitionHisService.getAll();
+        for(TransitionHis transitionHis: transitionHiss){
+            if(auth.getName().equals(transitionHis.getUsername())){
+                model.addAttribute("transition",transitionHis);
+                model.addAttribute("username",auth.getName());
+                return "Customer/TransitionHistory";
+            }
+
+        }
+        model.addAttribute("transitionError","*No transition");
+        model.addAttribute("username",auth.getName());
+        return "Customer/customerDestinationView";
+    }
 }

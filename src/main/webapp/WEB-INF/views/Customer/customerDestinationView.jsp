@@ -11,15 +11,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-    <title>${customer.username}</title>
-    <style type="text/css">
-        .error {
-            color: red;
-        }
-    </style>
+    <title>${username}</title>
 </head>
 <body>
-<input type="button" value="Add Route" onclick="window.location.href='routeCreate';return false;"><br><br>
 <c:if test="${!empty routes}">
     <table align="left" border="1">
         <thead>
@@ -27,37 +21,44 @@
             <th>Bus Name</th>
             <th>Boarding Point</th>
             <th>B_Bus Stoppage</th>
-            <th>D_Bus Stoppage</th>
             <th>Dropping Point</th>
             <th>D_Bus Stoppage</th>
-            <th>Time</th>
+            <th>Driver Name</th>
+            <th>Boarding Time</th>
+
             <th>Distance</th>
             <th>Fare</th>
-            <th>Driver Name</th>
+            <th>Action </th>
         </tr>
         </thead>
         <tbody>
-        <div class="cards">
         <c:forEach items="${routes}" var="route">
             <tr class="card">
-                <c:url var="ticketLink" value="/admin/buyTicket">
+                <c:url var="ticketLink" value="/customers/buyTicket">
                     <c:param name="id" value="${route.id}" />
                 </c:url>
                 <td>${route.busName}</td>
                 <td>${route.boardingPoint}</td>
                 <td>${route.b_busStoppage}</td>
+
                 <td>${route.droppingPoint}</td>
                 <td>${route.d_busStoppage}</td>
+                <td>${route.driverName}</td>
                 <td>${route.b_time}</td>
+
+
                 <td>${route.distance}</td>
                 <td>${route.fare}</td>
-                <td>${route.driverName}</td>
+
                 <td><a href="${ticketLink}">Buy Ticket</a></td>
             </tr>
         </c:forEach>
-        </div>
         </tbody>
     </table>
 </c:if>
+<c:url var="mainViewLink" value="/customers/main">
+    <c:param name="id" value="${customer.id}" />
+</c:url>
+<br><br><button onclick="window.location.href='${mainViewLink}';return false;">Back</button>
 </body>
 </html>

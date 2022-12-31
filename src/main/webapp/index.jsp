@@ -17,13 +17,6 @@
 <body>
 <br>
 <p><a href="users/login">Login</a></p>
-<p><a href="users/logout">Logout</a></p>
 
-<select id="country" name="country">
-    <option value="">....</option>
-    <option value="India">India</option>
-    <option value="Australia">Australia</option>
-    <option value="England">England</option>
-</select>
 </body>
 </html>

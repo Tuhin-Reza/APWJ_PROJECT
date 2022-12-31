@@ -35,5 +35,9 @@
         </tr>
     </table>
 </form:form>
+<c:url var="mainViewLink" value="/customers/main">
+    <c:param name="id" value="${customer.id}" />
+</c:url>
+<button onclick="window.location.href='${mainViewLink}';return false;">Back</button>
 </body>
 </html>
