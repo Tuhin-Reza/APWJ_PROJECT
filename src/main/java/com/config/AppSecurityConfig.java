@@ -42,9 +42,12 @@ public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
             .logout()
             .logoutUrl("/users/logout")
             .addLogoutHandler(new SecurityContextLogoutHandler())
-
-            .permitAll();
-    return http.build();
+            .deleteCookies()
+            .logoutSuccessUrl("/users/login")
+            .and()
+            .exceptionHandling();
+     // .permitAll();
+            return http.build();
 }
 
 

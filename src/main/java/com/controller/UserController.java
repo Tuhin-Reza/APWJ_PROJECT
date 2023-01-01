@@ -77,6 +77,7 @@ public class UserController {
     @RequestMapping("/decision")
     public String list(Model model) throws SQLException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if(!auth.getName().isEmpty()){
         List<User> users = userService.getAll();
         for(User user1: users){
             if(auth.getName().equals(user1.getUsername())){
@@ -101,6 +102,7 @@ public class UserController {
                 }
                 return "Lead/AdminHome";
             }
+        }
         }
         return "login/LoginView";
     }

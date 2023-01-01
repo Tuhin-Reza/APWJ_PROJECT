@@ -57,8 +57,10 @@
             <td><label>Password</label></td>
             <td>
                 <input type="password" name="password" id="password" /><br>
-                <input type="checkbox" onclick="myFunction()"> <small>Show Password</small>
-                <small><p id="passErr"></p></small>
+                <input type="checkbox" onclick="myFunction()">
+                <small>Show Password</small><br>
+                <small><p id="passErr"></p></small><br>
+
             </td>
         </tr>
         <tr>

@@ -28,8 +28,8 @@ public class AppConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/users/**")
-                .addResourceLocations("/users");
+        registry.addResourceHandler("/users/**,/URLToReachResourcesFolder/**")
+                .addResourceLocations("/users,/resources/**");
     }
 
     @Bean
@@ -67,5 +67,12 @@ public class AppConfig implements WebMvcConfigurer {
         transactionManager.setSessionFactory(sessionFactory().getObject());
         return transactionManager;
     }
+
+//    @Override
+//    public  void addResourceHandlers(ResourceHandlerRegistry registry){
+//        registry
+//                .addResourceHandler("/URLToReachResourcesFolder/**")
+//                .addResourceLocations("/resources/");
+//    }
 
 }

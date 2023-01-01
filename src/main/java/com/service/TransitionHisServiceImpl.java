@@ -44,4 +44,8 @@ public class TransitionHisServiceImpl implements TransitionHisService{
     public void delete(Long transitionHis_id) {
         transitionHisRepository.delete(transitionHis_id);
     }
+    @Transactional
+    public List<TransitionHis> getPerson(Long transitionHis_id){
+        return transitionHisRepository.getPerson(transitionHis_id);
+    }
 }

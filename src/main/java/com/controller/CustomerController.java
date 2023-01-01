@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -220,21 +221,26 @@ public class CustomerController {
         }
         return "Customer/buyTicket";
     }
-
     @RequestMapping("/TransitionList")
     public String list(Model model) throws SQLException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         List<TransitionHis> transitionHiss=transitionHisService.getAll();
+        List<TransitionHis> tranHis = new ArrayList<TransitionHis>();
         for(TransitionHis transitionHis: transitionHiss){
             if(auth.getName().equals(transitionHis.getUsername())){
-                model.addAttribute("transition",transitionHis);
-                model.addAttribute("username",auth.getName());
-                return "Customer/TransitionHistory";
+                TransitionHis transitionHis1=new TransitionHis();
+                transitionHis1.setId(transitionHis.getId());
+                transitionHis1.setUsername(transitionHis.getUsername());
+                transitionHis1.setTransition(transitionHis.getTransition());
+                transitionHis1.setAmount(transitionHis.getAmount());
+                transitionHis1.setAvail_balance(transitionHis.getAvail_balance());
+                tranHis.add(transitionHis1);
             }
-
         }
-        model.addAttribute("transitionError","*No transition");
-        model.addAttribute("username",auth.getName());
-        return "Customer/customerDestinationView";
+        for(TransitionHis transitionHis: tranHis) {
+           System.out.println(transitionHis.getUsername());
+        }
+        model.addAttribute("transitions",tranHis);
+        return "Customer/TransitionHistory";
     }
 }

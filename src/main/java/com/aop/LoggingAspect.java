@@ -5,6 +5,7 @@ import org.apache.log4j.Logger;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,8 +22,10 @@ LoggingAspect {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = "anonymous";
         if (authentication != null) {
-            User user = (User) authentication.getPrincipal();
-            username = user.getUsername();
+            if (! (authentication instanceof AnonymousAuthenticationToken)) {
+                User user = (User) authentication.getPrincipal();
+                username = user.getUsername();
+            }
         }
         logger.info(username + ": Executing @Before advice on loginSubmit ");
     }

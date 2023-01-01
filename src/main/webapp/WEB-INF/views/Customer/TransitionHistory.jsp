@@ -14,7 +14,7 @@
     <title>${username}</title>
 </head>
 <body>
-<c:if test="${!empty transition}">
+<c:if test="${!empty transitions}">
     <table align="left" border="1">
         <thead>
         <tr>
@@ -26,6 +26,7 @@
         </tr>
         </thead>
         <tbody>
+        <c:forEach items="${transitions}" var="transition">
         <tr>
             <td>${transition.id}</td>
             <td>${transition.username}</td>
@@ -33,6 +34,7 @@
             <td>${transition.amount}</td>
             <td>${transition.avail_balance}</td>
         </tr>
+        </c:forEach>
         </tbody>
     </table>
 </c:if>
