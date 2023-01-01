@@ -12,9 +12,27 @@
 <html>
 <head>
     <title>${account.username}</title>
+  <script>
+    function isValid() {
+      // const username =pForm.b;
+      // if(username ===""){
+      //     document.getElementById("userErr").innerHTML="Invalid Username";
+      //     return false;
+      // }else{
+      //     document.getElementById("userErr").innerHTML=" ";
+      // }
+      const value = document.getElementById("balance").value;
+      if(value<200){
+        alert("value");
+        return false;
+      }
+
+      return true;
+    }
+  </script>
 </head>
 <body>
-<form:form action="amountUpdate" modelAttribute="account">
+<form:form method="post" action="amountUpdate" modelAttribute="account" onsubmit="return isValid();">
   <table>
     <tr>
       <td>
@@ -34,7 +52,7 @@
     <tr>
       <td><form:label path="balance">Added Amount</form:label></td>
       <td>
-        <form:input type="number" path="balance" min="200" value="0" pattern="[0-9]+"/>
+        <form:input type="number" path="balance"  value="0" pattern="[0-9]+"/>
         <form:errors path="balance" style="color:red" />
       </td>
     </tr>

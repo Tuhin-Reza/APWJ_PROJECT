@@ -61,14 +61,14 @@ public class UserController {
     //----------------------- Log Error--------------------//
     @RequestMapping("/loginError")
     public String logError() {
-        return "User/UserRegistration";
+        return "login/LoginView";
     }
 
 
     //----------------------- Log Out--------------------//
     @RequestMapping("/logout")
     public String logout() {
-        return "login/LoginView";
+        return "login/LogOutView";
     }
 
 
@@ -80,12 +80,15 @@ public class UserController {
         List<User> users = userService.getAll();
         for(User user1: users){
             if(auth.getName().equals(user1.getUsername())){
+                System.out.println((auth.getName()));
+                System.out.println((user1.getUsername()));
                 List<Authority>authorities=authorityService.getAll();
                 for(Authority authority:authorities){
-                    if(authority.getAuthority().equals("ROLE_ADMIN")){
+                    System.out.println((authority.getAuthority()));
+                    if(authority.getAuthority().equals("ROLE_USER")){
+                        System.out.println((authority.getAuthority()));
                         User customerHome=userService.get(user1.getId());
                         model.addAttribute("customer",customerHome);
-
                         List<Account> accountHome = accountService.getAll();
                         for(Account account: accountHome){
                             if(user1.getUsername().equals(account.getUsername())){
@@ -94,8 +97,9 @@ public class UserController {
                             }
                         }
                     }
-                    //return "Customer/AdminHome";
+                    //
                 }
+                return "Lead/AdminHome";
             }
         }
         return "login/LoginView";

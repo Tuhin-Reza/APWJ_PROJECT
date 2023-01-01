@@ -44,8 +44,6 @@ public class CustomerController {
         return "login/LoginView";
     }
 
-
-
     //----------------------- Home Page Mapping --------------------//
     @RequestMapping("/main")
     public String c_main(Model model) throws SQLException {
@@ -99,6 +97,41 @@ public class CustomerController {
         model.addAttribute("enums",enums);
         return "Customer/CusProUpdate";
     }
+
+
+    //-----------------------Change User Password--------------------//
+    @RequestMapping("/cngPass")
+    public String editCngPass(@RequestParam("id") Long user_id, Model model) throws SQLException {
+        model.addAttribute("customer", userService.get(user_id));
+        List<PROFESSION> enums = Arrays.asList(PROFESSION.values());
+        model.addAttribute("enums",enums);
+        return "Customer/ChangePassword";
+    }
+    @RequestMapping("/cngPassUpdate")
+    public String updateCngPass(@Valid @ModelAttribute("customer") User user,BindingResult bindingResult,Model model) throws SQLException {
+       if(user.getPassword().isEmpty() || user.getPassword().length()<4 ){
+           model.addAttribute("passError1","*not empty");
+           model.addAttribute("passError2","*max length 4");
+           return "Customer/ChangePassword";
+       }
+        List<User> users = userService.getAll();
+        for(User user1: users){
+            if(user.getUsername().equals(user1.getUsername())){
+
+                User user2=new User();
+                user2.setId(user1.getId());
+                user2.setName(user1.getName());
+                user2.setAge(user1.getAge());
+                user2.setAddress(user1.getAddress());
+                user2.setProfession(user1.getProfession());
+                user2.setUsername(user1.getUsername());
+                user2.setPassword(user.getPassword());
+                userService.update(user2);
+            }
+        }
+        return "Customer/CustomerHome";
+    }
+
 
 
     //-----------------------Added Balance Mapping--------------------//

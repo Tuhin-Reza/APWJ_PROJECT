@@ -72,21 +72,21 @@
         <tr>
             <td><label>Destination Time</label></td>
             <td>
-                <form:input  type="text" path="b_time" id="b_time"  />
+                <form:input  type="text" path="b_time" id="b_time" readonly="true"  />
                 <form:errors path="b_time" style="color:red" />
             </td>
         </tr>
         <tr>
             <td><label>Distance</label></td>
             <td>
-                <form:input  type="text" path="distance" id="distance"  />
+                <form:input  type="text" path="distance" id="distance" readonly="true"  />
                 <form:errors path="distance" style="color:red" />
             </td>
         </tr>
         <tr>
             <td><label>Fare</label></td>
             <td>
-                <form:input  type="number" path="fare" id="fare" />
+                <form:input  type="number" path="fare" id="fare" readonly="true" />
                 <form:errors path="fare" style="color:red" />
             </td>
         </tr>

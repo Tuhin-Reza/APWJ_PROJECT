@@ -27,19 +27,19 @@ LoggingAspect {
         logger.info(username + ": Executing @Before advice on loginSubmit ");
     }
 
-    @Before("execution(public * com.service.*.*(..))")
-    public void all() {
-        logger.info("Executing @Before advice on every method in service package()");
-    }
+//    @Before("execution(public * com.service.*.*(..))")
+//    public void all() {
+//        logger.info("Executing @Before advice on every method in service package()");
+//    }
 
-    @Before("execution(public * com.service.*.*(..))")
-    public void allWithJointPoint(JoinPoint joinPoint) {
-        logger.info("Executing @Before advice on every method in service package()");
-        MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
-        logger.error(methodSignature.toString());
-        for(int i = 0; i < joinPoint.getArgs().length; i++) {
-            logger.info(joinPoint.getArgs()[i].getClass().getSimpleName());
-            logger.info(joinPoint.getArgs()[i].toString());
-        }
-    }
+//    @Before("execution(public * com.service.*.*(..))")
+//    public void allWithJointPoint(JoinPoint joinPoint) {
+//        logger.info("Executing @Before advice on every method in service package()");
+//        MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
+//        logger.error(methodSignature.toString());
+//        for(int i = 0; i < joinPoint.getArgs().length; i++) {
+//            logger.info(joinPoint.getArgs()[i].getClass().getSimpleName());
+//            logger.info(joinPoint.getArgs()[i].toString());
+//        }
+//    }
 }

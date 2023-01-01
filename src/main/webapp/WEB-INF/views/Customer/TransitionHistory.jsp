@@ -36,6 +36,7 @@
         </tbody>
     </table>
 </c:if>
+${transitionError}
 <c:url var="mainViewLink" value="/customers/main">
     <c:param name="id" value="${customer.id}" />
 </c:url>

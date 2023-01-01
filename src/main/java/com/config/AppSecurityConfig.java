@@ -12,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -29,19 +30,22 @@ public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
             .authorizeRequests()
             .antMatchers("/authoritiesssss/**")
             .access("hasRole('ROLE_USER')")
-            .antMatchers("/userss/Customer")
-            .access("hasRole('ROLE_ADMIN')")
-            .and()
-            .rememberMe()
+            .antMatchers("/customers/**")
+            .access("hasRole('ROLE_USER')")
             .and()
             .formLogin()
             .loginPage("/users/login")
             .loginProcessingUrl("/authentic")
-            //.failureUrl("/users/loginError")
+            .defaultSuccessUrl("/users/decision")
+            .failureUrl("/users/loginError")
             .and()
             .logout()
             .logoutUrl("/users/logout")
+            .addLogoutHandler(new SecurityContextLogoutHandler())
+
             .permitAll();
     return http.build();
 }
+
+
 }

@@ -14,15 +14,35 @@
     <title></title>
     <script>
         function isValid(pForm) {
-            console.log(pForm.method);
-            console.log(pForm.action);
-            console.log(pForm.username.value);
-            console.log(pForm.password.value);
+            const username =pForm.username.value ;
+            const pass     = pForm.password.value;
+
+            if(username ===""){
+                document.getElementById("userErr").innerHTML="Invalid Username";
+                return false;
+            }else{
+                document.getElementById("userErr").innerHTML=" ";
+            }
+
+            if(pass ===""){
+                document.getElementById("passErr").innerHTML="Invalid Password";
+                return false;
+            }
+            else{
+                document.getElementById("passErr").innerHTML=" ";
+            }
             return true;
+        }
+        function myFunction() {
+            const x = document.getElementById("password");
+            if (x.type === "password"){
+                x.type = "text";
+            }else{
+                x.type = "password";
+            }
         }
     </script>
 </head>
-<%--users/Customer--%>
 <body>
 <form action="${pageContext.request.contextPath}/authentic" method="post" onsubmit="return isValid(this);">
     <table>
@@ -30,12 +50,15 @@
             <td><label>Username</label></td>
             <td>
                 <input type="text" name="username" id="username"/>
+                <small><p id="userErr"></p></small>
             </td>
         </tr>
         <tr>
             <td><label>Password</label></td>
             <td>
-                <input type="password" name="password" id="password" />
+                <input type="password" name="password" id="password" /><br>
+                <input type="checkbox" onclick="myFunction()"> <small>Show Password</small>
+                <small><p id="passErr"></p></small>
             </td>
         </tr>
         <tr>

@@ -17,7 +17,7 @@ public class Account {
     @Column(name = "username")
     private String username;
 
-    @Min(value=200,message="*minimum 200tk")
+//    @Min(value=200,message="*minimum 200tk")
     @NotNull(message = "*balance required")
     @Column(name = "balance")
     private Integer balance;

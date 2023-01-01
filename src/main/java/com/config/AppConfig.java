@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.ViewResolver;
@@ -22,7 +23,7 @@ import java.util.Properties;
 @EnableWebMvc
 @EnableTransactionManagement
 @EnableAspectJAutoProxy
-@ComponentScan(basePackages = {"com.constant","com.controller","com.domain","com.service","com.repository","com.exception"})//"com.aop"
+@ComponentScan(basePackages = {"com.constant","com.controller","com.domain","com.service","com.repository","com.exception","com.aop"})//"com.aop"
 public class AppConfig implements WebMvcConfigurer {
 
     @Override
@@ -66,4 +67,5 @@ public class AppConfig implements WebMvcConfigurer {
         transactionManager.setSessionFactory(sessionFactory().getObject());
         return transactionManager;
     }
+
 }

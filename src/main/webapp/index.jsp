@@ -16,7 +16,8 @@
 </head><html>
 <body>
 <br>
-<p><a href="users/login">Login</a></p>
+<p><a href="registration/create">Sign up</a></p>
+<p><a href="users/login">Sign in</a></p>
 
 </body>
 </html>

@@ -2,10 +2,12 @@ package com.controller;
 
 
 import com.constant.PROFESSION;
+import com.domain.Account;
 import com.domain.Authority;
 import com.domain.UAM;
 import com.domain.User;
 import com.repository.RegistrationRepository;
+import com.service.AccountService;
 import com.service.AuthorityService;
 import com.service.RegistrationService;
 import com.service.UAMService;
@@ -27,11 +29,13 @@ public class RegistrationController {
     private UAMService uamService;
     private RegistrationService registrationService;
     private RegistrationRepository registrationRepository;
-    public RegistrationController(RegistrationService registrationService, RegistrationRepository registrationRepository,AuthorityService authorityService,UAMService uamService) {
+    private AccountService accountService;
+    public RegistrationController(RegistrationService registrationService, RegistrationRepository registrationRepository,AuthorityService authorityService,UAMService uamService,AccountService accountService) {
         this.registrationService = registrationService;
         this.registrationRepository = registrationRepository;
         this.authorityService=authorityService;
         this.uamService=uamService;
+        this.accountService=accountService;
     }
     @InitBinder
     public void initBinder(WebDataBinder webDataBinder) {
@@ -72,11 +76,19 @@ public class RegistrationController {
                 }
             }
             registrationService.create(user);
-            Authority authority=authorityService.get(1L);
+            Authority authority=authorityService.get(3L);
             UAM uam=new UAM();
             uam.setUserid(user.getId());
             uam.setAuthority_id(authority.getId());
             uamService.create(uam);
+
+            Account account=new Account();
+            account.setUsername(user.getUsername());
+            account.setBalance(0);
+            accountService.create(account);
+
+
+
             return "login/LoginView";
         }
         List<PROFESSION> enums = Arrays.asList(PROFESSION.values());

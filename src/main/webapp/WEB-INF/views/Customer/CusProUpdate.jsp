@@ -14,7 +14,7 @@
     <title>${customer.username}</title>
 </head>
 <body>
-<form:form action="customerUpdate" modelAttribute="customer">
+<form:form method="post" action="customerUpdate" modelAttribute="customer" onsubmit="return isValid(this);">
     <table>
         <tr>
             <td>
