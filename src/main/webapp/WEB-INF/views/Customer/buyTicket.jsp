@@ -12,14 +12,65 @@
 <html>
 <head>
     <title>${username}</title>
-    <style type="text/css">
-        .error {
-            color: red;
+    <style>
+        body {
+            background: whitesmoke; /* fallback for old browsers */
+            background: -webkit-linear-gradient(
+                    to right,
+                    #1184ff,
+                    #19d5ff
+            ); /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(
+                    to right,
+                    silver,
+                    silver
+            ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        }
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: silver;
+        }
+
+        li {
+            float: left;
+        }
+
+        li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        li a:hover:not(.active) {
+            background-color: silver;
+        }
+
+        .active {
+            background-color: black;
         }
     </style>
+
 </head>
 <body>
+<form:form >
+    <c:url var="mainViewLink" value="/customers/main">
+        <c:param name="id" value="${customer.id}" />
+    </c:url>
+    <ul>
+        <li><a href=""></a></li>
+        <li><a href=""></a></li>
+        <li><a href=""></a></li>
+        <li style="float:right"><a class="active" onclick="window.location.href='${mainViewLink}';return false;">Back</a></li>
+    </ul>
+</form:form>
+<div style="align-items: center;  margin-top: 15px;padding-left: 400px">
 <form:form action="confirmTicket" method="post" modelAttribute="route">
+    <h6>Ticket Confirmation</h6><br>
     <table>
         <tr>
             <td>
@@ -90,13 +141,17 @@
                 <form:errors path="fare" style="color:red" />
             </td>
         </tr>
+        <tr>
+            <td><label></label></td>
+            <td>
+                <input type="submit" value="Confirm Buy">
+            </td>
+        </tr>
     </table>
-    <br><input type="submit" value="Confirm Buy">
 </form:form>
-<c:url var="mainViewLink" value="/customers/main">
-    <c:param name="id" value="${customer.id}" />
-</c:url>
-<br><br><button onclick="window.location.href='${mainViewLink}';return false;">Back</button>
+</div>
+
+
 
 </body>
 </html>

@@ -46,7 +46,7 @@
         document.getElementById("ageErr").innerHTML="*age required";
         return false;
       }else if(age<15){
-        document.getElementById("ageErr").innerHTML="*age must be>15";
+        document.getElementById("ageErr").innerHTML="*age must be(5)";
         return false;
       }else{
         document.getElementById("ageErr").innerHTML=" ";
@@ -71,15 +71,20 @@
       }
 
 
-
-
-     if(username.length>2){
-        document.getElementById("userErr").innerHTML="*must be length>2";
+     if(username===""){
+       document.getElementById("userErr").innerHTML="*username required";
+       return false;
+     }if(username.length<3){
+        document.getElementById("userErr").innerHTML="*must be length(3)";
         return false;
       }else if(!username.match(/^[a-z0-9]+$/)){
        document.getElementById("userErr").innerHTML="*must be(small letter+alphanumeric";
        return false;
-     }else{
+     }
+      else if(username.match(/^[0-9]+$/)){
+        document.getElementById("userErr").innerHTML="*must be(small letter+alphanumeric";
+        return false;
+      }else{
         document.getElementById("userErr").innerHTML=" ";
       }
 
@@ -88,15 +93,15 @@
         document.getElementById("passErr").innerHTML="*password required";
         return false;
       }else if(password.length>4){
-        document.getElementById("passErr").innerHTML="*minimum length(4)]";
+        document.getElementById("passErr").innerHTML="*minimum length(4)";
         return false;
-      }else if(!username.match(/^[0-9]+$/)){
-        document.getElementById("userErr").innerHTML="*only decimal number";
+      }else if(password.match(/^[A-Za-z]+$/)){
+        document.getElementById("passErr").innerHTML="*only decimal number";
         return false;
       }else{
         document.getElementById("passErr").innerHTML=" ";
       }
-      return false;
+      return true;
     }
     function myFunction() {
       const x = document.getElementById("password");
@@ -108,6 +113,8 @@
     }
   </script>
 </head>
+
+
 <body>
 <form:form action="submit" method="post" modelAttribute="user" onsubmit="return isValid();">
   <table>
@@ -155,7 +162,7 @@
       <td>
         <form:input type="text" path="username" id="username"/>
         <form:errors path="username" style="color:red" />
-        <label style="color:red">${unError}</label>
+        <small style="color:red"+><span>${unError}</span></small>
         <small style="color:red"><span id="userErr"></span></small>
       </td>
     </tr>
@@ -165,10 +172,8 @@
       <td>
         <form:input type="password" path="password" id="password" />
         <form:errors path="password" style="color:red" />
-
-        <input type="checkbox" onclick="myFunction()"> <small>Show Password</small>
-        <label style="color:red">${passError}</label>
         <small style="color:red"><span id="passErr"></span></small>
+        <br><input type="checkbox" onclick="myFunction()"> <small>Show Password</small>
       </td>
     </tr>
 
@@ -177,32 +182,5 @@
     </tr>
   </table>
 </form:form>
-
-
-<%--<c:if test="${!empty users}">--%>
-<%--<table align="left" border="1">--%>
-<%--  <thead>--%>
-<%--  <tr>--%>
-<%--    <th>Name</th>--%>
-<%--    <th>Password</th>--%>
-<%--  </tr>--%>
-<%--  </thead>--%>
-<%--  <tbody>--%>
-<%--  <c:forEach items="${users}" var="user">--%>
-<%--    <tr>--%>
-<%--      <c:url var="updateLink" value="/users/edit">--%>
-<%--        <c:param name="student_id" value="${user.id}" />--%>
-<%--      </c:url>--%>
-<%--      <c:url var="deleteLink" value="/users/delete">--%>
-<%--        <c:param name="student_id" value="${user.id}" />--%>
-<%--      </c:url>--%>
-<%--      <td>${user.name}</td>--%>
-<%--      <td>${user.password}</td>--%>
-<%--      <td><a href="${updateLink}">Update</a> | <a href="${deleteLink}">Delete</a></td>--%>
-<%--    </tr>--%>
-<%--  </c:forEach>--%>
-<%--  </tbody>--%>
-<%--</table>--%>
-<%--</c:if>--%>
 </body>
 </html>

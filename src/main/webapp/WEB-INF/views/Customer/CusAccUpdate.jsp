@@ -14,25 +14,74 @@
     <title>${account.username}</title>
   <script>
     function isValid() {
-      // const username =pForm.b;
-      // if(username ===""){
-      //     document.getElementById("userErr").innerHTML="Invalid Username";
-      //     return false;
-      // }else{
-      //     document.getElementById("userErr").innerHTML=" ";
-      // }
       const value = document.getElementById("balance").value;
       if(value<200){
-        alert("value");
+        alert("value"+"*amount must be greater 200");
         return false;
       }
-
       return true;
     }
   </script>
+  <style>
+    body {
+      background: whitesmoke; /* fallback for old browsers */
+      background: -webkit-linear-gradient(
+              to right,
+              #1184ff,
+              #19d5ff
+      ); /* Chrome 10-25, Safari 5.1-6 */
+      background: linear-gradient(
+              to right,
+              silver,
+              silver
+      ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    }
+    ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: silver;
+    }
+
+    li {
+      float: left;
+    }
+
+    li a {
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+    }
+
+    li a:hover:not(.active) {
+      background-color: silver;
+    }
+
+    .active {
+      background-color: black;
+    }
+  </style>
+
+
 </head>
 <body>
+<form:form >
+  <c:url var="mainViewLink" value="/customers/main">
+    <c:param name="id" value="${customer.id}" />
+  </c:url>
+  <ul>
+    <li><a href=""></a></li>
+    <li><a href=""></a></li>
+    <li><a href=""></a></li>
+    <li style="float:right"><a class="active" onclick="window.location.href='${mainViewLink}';return false;">Back</a></li>
+  </ul>
+</form:form>
+<div style="align-items: center;  margin-top: 15px;padding-left: 400px">
 <form:form method="post" action="amountUpdate" modelAttribute="account" onsubmit="return isValid();">
+  <h3>Amount Added</h3>
   <table>
     <tr>
       <td>
@@ -52,19 +101,22 @@
     <tr>
       <td><form:label path="balance">Added Amount</form:label></td>
       <td>
-        <form:input type="number" path="balance"  value="0" pattern="[0-9]+"/>
+        <form:input type="number" path="balance"  value="0"/>
         <form:errors path="balance" style="color:red" />
+        <small style="color:red"><span id="addressErr"></span></small>
       </td>
     </tr>
+    <tr>
 
     <tr>
-      <td><input type="submit" value="Update"/></td>
+      <td></td>
+      <td>
+        <input type="submit" value="Update"/>
+      </td>
     </tr>
   </table>
 </form:form>
-<c:url var="mainViewLink" value="/customers/main">
-  <c:param name="id" value="${customer.id}" />
-</c:url>
-<br><br><button onclick="window.location.href='${mainViewLink}';return false;">Back</button>
+</div>
+
 </body>
 </html>

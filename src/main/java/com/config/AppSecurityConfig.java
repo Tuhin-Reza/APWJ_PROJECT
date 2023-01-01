@@ -41,6 +41,7 @@ public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
             .and()
             .logout()
             .logoutUrl("/users/logout")
+            .logoutUrl("/customers/logout")
             .addLogoutHandler(new SecurityContextLogoutHandler())
             .deleteCookies()
             .logoutSuccessUrl("/users/login")

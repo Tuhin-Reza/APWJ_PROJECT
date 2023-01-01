@@ -56,6 +56,9 @@ public class CustomerController {
                 model.addAttribute("customer",customer);
                 model.addAttribute("customer_id",customer.getId());
 
+                List<Route> routes =routeService.getAll();
+                model.addAttribute("routes",routes);
+
                 List<Account> accountHome = accountService.getAll();
                 for(Account account: accountHome){
                     if(user1.getUsername().equals(account.getUsername())){
@@ -91,7 +94,7 @@ public class CustomerController {
     @RequestMapping("/customerUpdate")
     public String update(@Valid @ModelAttribute("customer") User user,BindingResult bindingResult,Model model) throws SQLException {
         if (!bindingResult.hasErrors()) {
-            userService.update(user);
+            //userService.update(user);
             return "Customer/CustomerHome";
         }
         List<PROFESSION> enums = Arrays.asList(PROFESSION.values());
@@ -154,7 +157,18 @@ public class CustomerController {
         if (!bindingResult.hasErrors()) {
             Account account2=accountService.get(account.getId());
             account.setBalance(account.getBalance()+account2.getBalance());
+            int amount=account.getBalance()+account2.getBalance();
             accountService.update(account);
+
+            //-----------------------Transition History--------------------//
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            TransitionHis transitionHis=new TransitionHis();
+            transitionHis.setUsername(auth.getName());
+            transitionHis.setTransition("credited");
+            transitionHis.setAmount(account.getBalance());
+            transitionHis.setAvail_balance(amount);
+            transitionHisService.create(transitionHis);
+
             return "redirect:/customers/main";
         }
         return "Customer/CusAccUpdate";
@@ -202,7 +216,7 @@ public class CustomerController {
                        CusTicBuy cusTicBuy=new CusTicBuy();
                        cusTicBuy.setCus_username(auth.getName());
                        cusTicBuy.setRouteId(route.getId());
-                       //cusTicBuyService.create(cusTicBuy);
+                        cusTicBuyService.create(cusTicBuy);
 
                        //-----------------------Transition History--------------------//
                        TransitionHis transitionHis=new TransitionHis();
@@ -212,7 +226,7 @@ public class CustomerController {
                        transitionHis.setAvail_balance(amount);
                        transitionHisService.create(transitionHis);
                    }else {
-                       model.addAttribute("error"+"*amount less 200");
+                       model.addAttribute("error","*amount must be greater 200");
                        return "Customer/buyTicket";
                    }
                 }

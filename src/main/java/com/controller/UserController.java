@@ -4,11 +4,13 @@ package com.controller;
 import com.constant.PROFESSION;
 import com.domain.Account;
 import com.domain.Authority;
+import com.domain.Route;
 import com.domain.User;
 import com.repository.AuthorityRepository;
 import com.repository.UserRepository;
 import com.service.AccountService;
 import com.service.AuthorityService;
+import com.service.RouteService;
 import com.service.UserService;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.security.core.Authentication;
@@ -38,10 +40,12 @@ public class UserController {
     private UserService userService;
     private AuthorityService authorityService;
     private AccountService accountService;
-    public UserController(UserService userService,AuthorityService authorityService,AccountService accountService) {
+    private RouteService routeService;
+    public UserController(UserService userService,AuthorityService authorityService,AccountService accountService,RouteService routeService) {
         this.userService = userService;
         this.authorityService=authorityService;
         this.accountService=accountService;
+        this.routeService=routeService;
     }
     @InitBinder
     public void initBinder(WebDataBinder webDataBinder) {
@@ -60,7 +64,9 @@ public class UserController {
 
     //----------------------- Log Error--------------------//
     @RequestMapping("/loginError")
-    public String logError() {
+    public String logError(Model model) {
+        model.addAttribute("error","*provide correct info");
+
         return "login/LoginView";
     }
 
@@ -72,7 +78,6 @@ public class UserController {
     }
 
 
-
     //----------------------- Decision Mapping--------------------//
     @RequestMapping("/decision")
     public String list(Model model) throws SQLException {
@@ -81,15 +86,15 @@ public class UserController {
         List<User> users = userService.getAll();
         for(User user1: users){
             if(auth.getName().equals(user1.getUsername())){
-                System.out.println((auth.getName()));
-                System.out.println((user1.getUsername()));
                 List<Authority>authorities=authorityService.getAll();
                 for(Authority authority:authorities){
-                    System.out.println((authority.getAuthority()));
                     if(authority.getAuthority().equals("ROLE_USER")){
-                        System.out.println((authority.getAuthority()));
                         User customerHome=userService.get(user1.getId());
                         model.addAttribute("customer",customerHome);
+
+                        List<Route> routes =routeService.getAll();
+                        model.addAttribute("routes",routes);
+
                         List<Account> accountHome = accountService.getAll();
                         for(Account account: accountHome){
                             if(user1.getUsername().equals(account.getUsername())){
