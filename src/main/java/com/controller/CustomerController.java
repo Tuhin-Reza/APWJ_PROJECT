@@ -257,4 +257,32 @@ public class CustomerController {
         model.addAttribute("transitions",tranHis);
         return "Customer/TransitionHistory";
     }
+
+
+    //-----------------------Buying Ticket History--------------------//
+    @RequestMapping("/buyingHistory")
+    public String buying_History(Model model) throws SQLException {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        List<CusTicBuy>cusTicBuys=cusTicBuyService.getAll();
+        List<CusTicBuy> cusTicBuys2 = new ArrayList<CusTicBuy>();
+        for(CusTicBuy cusTicBuy: cusTicBuys){
+            if(auth.getName().equals(cusTicBuy.getCus_username())){
+                CusTicBuy cusTicBuy1=new CusTicBuy();
+                cusTicBuy1.setId(cusTicBuy.getId());
+                cusTicBuy1.setCus_username(cusTicBuy.getCus_username());
+                cusTicBuy1.setRouteId(cusTicBuy.getRouteId());
+
+                cusTicBuys2.add(cusTicBuy1);
+            }
+        }
+        for(CusTicBuy cusTicBuy:cusTicBuys2) {
+            System.out.println(cusTicBuy.getId());
+            System.out.println(cusTicBuy.getCus_username());
+            System.out.println(cusTicBuy.getRouteId());
+        }
+        model.addAttribute("cusTickets", cusTicBuys2);
+        model.addAttribute("username",auth.getName());
+        return "Customer/CusTicket";
+
+    }
 }

@@ -2,16 +2,10 @@ package com.controller;
 
 
 import com.constant.PROFESSION;
-import com.domain.Account;
-import com.domain.Authority;
-import com.domain.Route;
-import com.domain.User;
+import com.domain.*;
 import com.repository.AuthorityRepository;
 import com.repository.UserRepository;
-import com.service.AccountService;
-import com.service.AuthorityService;
-import com.service.RouteService;
-import com.service.UserService;
+import com.service.*;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -41,11 +35,13 @@ public class UserController {
     private AuthorityService authorityService;
     private AccountService accountService;
     private RouteService routeService;
-    public UserController(UserService userService,AuthorityService authorityService,AccountService accountService,RouteService routeService) {
+    private UAMService uamService;
+    public UserController(UserService userService,AuthorityService authorityService,AccountService accountService,RouteService routeService,UAMService uamService) {
         this.userService = userService;
         this.authorityService=authorityService;
         this.accountService=accountService;
         this.routeService=routeService;
+        this.uamService=uamService;
     }
     @InitBinder
     public void initBinder(WebDataBinder webDataBinder) {
@@ -74,7 +70,7 @@ public class UserController {
     //----------------------- Log Out--------------------//
     @RequestMapping("/logout")
     public String logout() {
-        return "login/LogOutView";
+        return "login/LoginView";
     }
 
 
@@ -86,26 +82,39 @@ public class UserController {
         List<User> users = userService.getAll();
         for(User user1: users){
             if(auth.getName().equals(user1.getUsername())){
-                List<Authority>authorities=authorityService.getAll();
-                for(Authority authority:authorities){
-                    if(authority.getAuthority().equals("ROLE_USER")){
-                        User customerHome=userService.get(user1.getId());
-                        model.addAttribute("customer",customerHome);
 
-                        List<Route> routes =routeService.getAll();
-                        model.addAttribute("routes",routes);
+                List<UAM> uams=uamService.getAll();
+                for(UAM uam1:uams){
+                    if(uam1.getUserid().equals(user1.getId())){
 
-                        List<Account> accountHome = accountService.getAll();
-                        for(Account account: accountHome){
-                            if(user1.getUsername().equals(account.getUsername())){
-                                model.addAttribute("amount",account.getBalance());
-                                return "Customer/CustomerHome";
+                        List<Authority>authorities=authorityService.getAll();
+                        for(Authority authority:authorities){
+                            if(uam1.getAuthority_id().equals(authority.getId())){
+                                if((authority.getName().equals("ROLE_USER"))){
+                                    System.out.println("++++++I am user +++++++");
+                                    User customerHome=userService.get(user1.getId());
+                                    model.addAttribute("customer",customerHome);
+
+                                    List<Route> routes =routeService.getAll();
+                                    model.addAttribute("routes",routes);
+
+                                    List<Account> accountHome = accountService.getAll();
+                                    for(Account account: accountHome){
+                                        if(user1.getUsername().equals(account.getUsername())){
+                                            model.addAttribute("amount",account.getBalance());
+                                            return "Customer/CustomerHome";
+                                        }
+                                    }
+                                }else {
+                                    List<Route> routes =routeService.getAll();
+                                    model.addAttribute("routes",routes);
+                                    System.out.println("++++++I am Admin +++++++");
+                                    return "Lead/AdminHome";
+                                }
                             }
                         }
                     }
-                    //
                 }
-                return "Lead/AdminHome";
             }
         }
         }

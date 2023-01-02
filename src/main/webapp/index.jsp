@@ -11,6 +11,7 @@
         a:hover, a:active {
             background-color:hsl(0, 0%, 30%);
         }
+
     </style>
     <title>Index</title>
 </head>
@@ -19,5 +20,6 @@
 <br>
 <p><a href="registration/create">Sign up</a></p>
 <p><a href="users/login">Sign in</a></p>
+</div>
 </body>
 </html>

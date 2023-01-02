@@ -100,7 +100,7 @@
     </style>
 </head>
 <body>
-<p typeof="hide"><a href="logout">Logout</a></p>
+<%--<p typeof="hide"><a href="logout">Logout</a></p>--%>
 <c:url var="CPViewLink" value="logout">
 </c:url>
 <form:form>
@@ -110,7 +110,7 @@
     <c:url var="updateLink" value="/customers/customerEdit">
         <c:param name="id" value="${customer.id}" />
     </c:url>
-    <c:url var="addMoneyLink" value="/customers/amountAdded">
+    <c:url var="tbHistory" value="/customers/buyingHistory">
         <c:param name="id" value="${customer.id}" />
     </c:url>
     <c:url var="routeViewLink" value="/customers/routeList">
@@ -125,7 +125,7 @@
         <li><a class="btn1" onclick="window.location.href='${addMoneyLink}';return false;">Balance :${amount}</a></li>
         <li><a class="btn1" onclick="window.location.href='${viewLink}';return false;">View Profile</a></li>
         <li><a class="btn1" onclick="window.location.href='${updateLink}';return false;">Update Profile</a></li>
-        <li><a class="btn1" onclick="window.location.href='${addMoneyLink}';return false;">Ticket History</a></li>
+        <li><a class="btn1" onclick="window.location.href='${tbHistory}';return false;">Ticket History</a></li>
         <li><a class="btn1" onclick="window.location.href='${THViewLink}';return false;">Transition History</a></li>
         <li><a class="btn1" onclick="window.location.href='${CPViewLink}';return false;">Logout</a></li>
     </ul>

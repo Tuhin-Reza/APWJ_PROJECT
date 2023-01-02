@@ -8,6 +8,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 
 @Service
 @Transactional
@@ -20,5 +22,10 @@ public class UAMServiceImp implements UAMService {
     @Transactional
     public UAM create(UAM uam) {
         return  uamRepository.create(uam);
+    }
+
+    @Transactional(readOnly = true)
+    public List<UAM> getAll() {
+        return uamRepository.getAll();
     }
 }

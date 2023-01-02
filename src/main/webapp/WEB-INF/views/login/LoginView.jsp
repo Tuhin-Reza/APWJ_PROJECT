@@ -67,7 +67,7 @@
         }
     </script>
 </head>
-<body>
+<body style="background-color: silver">
 <form action="${pageContext.request.contextPath}/authentic" method="post" onsubmit="return isValid(this);">
     <div class="login-form">
         <form aaction="${pageContext.request.contextPath}/authentic" method="post" onsubmit="return isValid(this);">
@@ -86,11 +86,10 @@
                 <button type="submit" >Sign in</button>
             </div>
             <div>
-                <a href="#">Forgot Password?</a>
+                <a href="http://localhost:8080/PROJECT_DTS_war_exploded/registration/create">account not yet?</a>
             </div>
-        </form>
+</form>
 
-    </div>
 
 
 <%--    Username :--%>

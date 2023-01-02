@@ -68,15 +68,15 @@ public class AuthorityController {
     public String update(@Valid @ModelAttribute("authority") Authority authority, BindingResult bindingResult) throws SQLException {
         if (!bindingResult.hasErrors()) {
             authorityService.update(authority);
-            return "redirect:/authorities/list";
+            return "redirect:/authorities/getAll";
         }
         return "Authority/EditAuthority";
     }
 
     @RequestMapping("/delete")
-    public String delete(@RequestParam("authority_id") Long authority_id) throws SQLException {
+    public String delete(@RequestParam("id") Long authority_id) throws SQLException {
        authorityService.delete(authority_id);
-        return "redirect:/authorities/list";
+        return "redirect:/authorities/getAll";
     }
     @RequestMapping("/get")
     public void get() {

@@ -115,8 +115,8 @@
 </head>
 
 
-<body>
-<form:form action="submit" method="post" modelAttribute="user" onsubmit="return isValid();">
+<body style="background-color: silver;margin-left: 400px;margin-top: 100px">
+<form:form  action="submit" method="post" modelAttribute="user" onsubmit="return isValid();">
   <table>
     <tr>
       <td><label>Full Name</label></td>
@@ -180,7 +180,9 @@
     <tr>
       <td colspan="2"><input type="submit" value="Sign Up"></td>
     </tr>
+    <a href="http://localhost:8080/PROJECT_DTS_war_exploded/users/login">account yet?</a>
   </table>
+  <a href="http://localhost:8080/PROJECT_DTS_war_exploded/users/login">account yet?</a>
 </form:form>
 </body>
 </html>

@@ -42,12 +42,6 @@ public class RegistrationController {
         StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
         webDataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
     }
-    @RequestMapping("/login")
-    public String login(Model model) {
-        User user = new User();
-        model.addAttribute("user",user);
-        return "LoginView";
-    }
     @RequestMapping("/create")
     public String show(Model model) {
         User user = new User();
