@@ -151,7 +151,7 @@
 
     </div>
     <div class="subnav">
-        <p typeof="hide"><a href="logout">Logout</a></p>
+        <p><a href="logout">Logout</a></p>
     </div>
 </div>
 

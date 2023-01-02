@@ -12,6 +12,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import org.apache.log4j.Logger;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+
 import javax.validation.Valid;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -21,6 +27,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/customers")
 public class CustomerController {
+    private static final Logger logger = Logger.getLogger(User.class);
 
     //----------------------- All Java Services Classes --------------------//
     private UserService userService;
@@ -159,6 +166,8 @@ public class CustomerController {
             account.setBalance(account.getBalance()+account2.getBalance());
             int amount=account.getBalance()+account2.getBalance();
             accountService.update(account);
+            logger.info(account.getBalance()+" Amount added");
+            logger.info(amount+"Present Balance");
 
             //-----------------------Transition History--------------------//
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -225,6 +234,10 @@ public class CustomerController {
                        transitionHis.setAmount(route.getFare());
                        transitionHis.setAvail_balance(amount);
                        transitionHisService.create(transitionHis);
+                       logger.info(auth.getName()+" User name");
+                       logger.info(route.getFare()+" Amount Debited");
+                       logger.info(amount+" Amount Again Credited");
+
                    }else {
                        model.addAttribute("error","*amount must be greater 200");
                        return "Customer/buyTicket";

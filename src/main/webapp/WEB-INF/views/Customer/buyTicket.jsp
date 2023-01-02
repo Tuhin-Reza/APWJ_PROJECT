@@ -70,7 +70,7 @@
 </form:form>
 <div style="align-items: center;  margin-top: 15px;padding-left: 400px">
 <form:form action="confirmTicket" method="post" modelAttribute="route">
-    <h6>Ticket Confirmation</h6><br>
+    <h3>Ticket Confirmation</h3><br>
     <table>
         <tr>
             <td>

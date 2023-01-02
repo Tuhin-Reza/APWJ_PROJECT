@@ -113,7 +113,7 @@
     <c:url var="tbHistory" value="/customers/buyingHistory">
         <c:param name="id" value="${customer.id}" />
     </c:url>
-    <c:url var="routeViewLink" value="/customers/routeList">
+    <c:url var="addMoneyLink" value="/customers/amountAdded">
         <c:param name="id" value="${customer.id}" />
     </c:url>
     <c:url var="THViewLink" value="/customers/TransitionList">
